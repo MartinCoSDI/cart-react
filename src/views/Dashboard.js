@@ -4,8 +4,6 @@ import axios from 'axios';
 import Plot from 'react-plotly.js';
 import Trendline from './PlotTrendLine';
 function Dashboard() {
-
-    const [data, setData] = useState();
    
     const fetchDatafunc  = async(url, dataset) => {
         try {
@@ -18,16 +16,12 @@ function Dashboard() {
         }
     };
 
-    useEffect(() => {
-        fetchDatafunc('http://127.0.0.1:5000/api/hello', setData);
-    },[])
-    
 
     //http://127.0.0.1:5000/api/data_full2024
     const [data_2023, setData_2023] = useState();
     
     useEffect(() => {
-        fetchDatafunc('http://127.0.0.1:5000/api/data_full2024', setData_2023);
+        fetchDatafunc('https://martinco.pythonanywhere.com/api/data_full2024', setData_2023);
     },[])
 
 
@@ -35,7 +29,7 @@ function Dashboard() {
     const [data_2024, setData_2024] = useState();
     
     useEffect(() => {
-        fetchDatafunc('http://127.0.0.1:5000/api/data_2024', setData_2024);
+        fetchDatafunc('https://martinco.pythonanywhere.com/api/data_2024', setData_2024);
     },[])
 
 
@@ -43,7 +37,7 @@ function Dashboard() {
     const [delivery, setDelivery] = useState();
     
     useEffect(() => {
-        fetchDatafunc('http://127.0.0.1:5000/api/delivery_rate', setDelivery);
+        fetchDatafunc('https://martinco.pythonanywhere.com/api/delivery_rate', setDelivery);
     },[])
 
 
@@ -55,7 +49,7 @@ function Dashboard() {
     useEffect(() =>{
         const fetchData = async() => {
             try {
-                const response = await fetch('http://127.0.0.1:5000/api/delivery_rate_over_time');
+                const response = await fetch('https://martinco.pythonanywhere.com/api/delivery_rate_over_time');
                 const jsonData = await response.json();
                 setX_DataDeliveryRate(jsonData.Total);
                 setY_DataDeliveryRate(jsonData.Tatol);
@@ -72,7 +66,7 @@ function Dashboard() {
     const [order, setOrder] = useState();
     
     useEffect(() => {
-        fetchDatafunc('http://127.0.0.1:5000//api/order_trend_dashboard', setOrder);
+        fetchDatafunc('https://martinco.pythonanywhere.com/api/order_trend_dashboard', setOrder);
     },[])
    
 
