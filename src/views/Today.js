@@ -3,7 +3,7 @@ import "./Today.css";
 import RecursiveTable from "./RecursiveTable";
 
 function Today() {
-  //http://127.0.0.1:5000/api/today
+  //https://martinco.pythonanywhere.com/api/today
   const [today_data, setToday_Data] = useState(null);
   const fetchDatafunc  = async(url, dataset) => {
     try {
@@ -17,14 +17,14 @@ function Today() {
 };
 
   useEffect(() => {
-        fetchDatafunc('http://127.0.0.1:5000/api/today', setToday_Data);
+        fetchDatafunc('https://martinco.pythonanywhere.com/api/today', setToday_Data);
   },[])
 
-  //http://127.0.0.1:5000/api/today_list_order
+  //https://martinco.pythonanywhere.com/api/today_list_order
   const [list_data, setList_Data] = useState();
 
   useEffect(() => {
-    fetchDatafunc('http://127.0.0.1:5000/api/today_list_order', setList_Data);
+    fetchDatafunc('https://martinco.pythonanywhere.com/api/today_list_order', setList_Data);
 },[])
 
 

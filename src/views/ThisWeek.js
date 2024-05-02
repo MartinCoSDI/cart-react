@@ -3,13 +3,13 @@ import "./ThisWeek.css";
 
 function Week() {
 
-  //http://127.0.0.1:5000/api/today
+  //https://martinco.pythonanywhere.com/api/today
   const [today_data, setToday_Data] = useState(null);
 
   useEffect(() => {
     const fetchData = async() =>{
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/today');
+        const response = await fetch('https://martinco.pythonanywhere.com/api/today');
         const json = await response.json();
         setToday_Data(json);
       }
@@ -23,13 +23,13 @@ function Week() {
     //then call it to use within the useEffect hook
   },[])
 
-  //http://127.0.0.1:5000/api/today_list_order
+  //https://martinco.pythonanywhere.com/api/today_list_order
   const [list_data, setList_Data] = useState(null);
 
   useEffect(() => {
     const fetchData = async() =>{
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/today_list_order');
+        const response = await fetch('https://martinco.pythonanywhere.com/api/today_list_order');
         const json = await response.json();
         setList_Data(json);
       }

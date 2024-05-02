@@ -90,19 +90,19 @@ function Dashboard() {
                     <ul className ="stat-list">
                         <li className="stat-li">
                             <p className="stat-li-p">
-                                Order
+                                Total Order
                                 {data_2023 ? <span className="order-type">{data_2023.Total_Ord}</span>:<span className="order-type">Loading...</span>}
                             </p> 
                         </li>
                         <li className="stat-li">
                             <p className="stat-li-p">
-                                Order
+                                Total Open Order
                                 {data_2023 ? <span className="order-type">{data_2023.Total_O}</span>:<span className="order-type">Loading...</span>}
                             </p> 
                         </li>
                         <li className="stat-li">
                             <p className="stat-li-p">
-                                Order
+                                Total Closed Order
                                 {data_2023 ? <span className="order-type">{data_2023.Total_C}</span>:<span className="order-type">Loading...</span>}
                             </p> 
                         </li>

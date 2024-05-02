@@ -5,7 +5,7 @@ import BarHorizontal from "./PlotBarHorizontal";
 
 function Month() {
 
-  //http://127.0.0.1:5000/api/today
+  //https://martinco.pythonanywhere.com/api/today
   const [month_data, setMonth_Data] = useState(null);
   const fetchDatafunc  = async(url, dataset) => {
     try {
@@ -19,13 +19,13 @@ function Month() {
 };
 
   useEffect(() => {
-      fetchDatafunc('http://127.0.0.1:5000/api/month', setMonth_Data);
+      fetchDatafunc('https://martinco.pythonanywhere.com/api/month', setMonth_Data);
   },[])
 
   //http://127.0.0.1:5000/api/year_month_order_with_para
   const [value, setValue] = useState(null);
   useEffect(() => {
-    fetchDatafunc('http://127.0.0.1:5000/api/year_month_order_with_para', setValue);
+    fetchDatafunc('https://martinco.pythonanywhere.com/api/year_month_order_with_para', setValue);
 },[])
 
 
@@ -40,10 +40,10 @@ function Month() {
           setX_Month(event.target.value);
   }
 
-  //http://127.0.0.1:5000/api/year_month_order_vendor_with_para
+  //https://martinco.pythonanywhere.com/api/year_month_order_vendor_with_para
   const [vendor_value, setVendor_Value] = useState(null);
   useEffect(() => {
-    fetchDatafunc('http://127.0.0.1:5000/api/year_month_order_vendor_with_para', setVendor_Value);
+    fetchDatafunc('https://martinco.pythonanywhere.com/api/year_month_order_vendor_with_para', setVendor_Value);
   },[])
 
   const [vendor_year, setV_Year] = useState(null);

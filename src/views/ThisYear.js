@@ -7,7 +7,7 @@ import Bar from "./PlotBar";
 
 function Year() {
 
-  //http://127.0.0.1:5000/api/today
+  //https://martinco.pythonanywhere.com/api/today
   const [year_data, setYear_Data] = useState(null);
   const fetchDatafunc  = async(url, dataset) => {
     try {
@@ -21,13 +21,13 @@ function Year() {
 };
 
   useEffect(() => {
-      fetchDatafunc('http://127.0.0.1:5000/api/year', setYear_Data);
+      fetchDatafunc('https://martinco.pythonanywhere.com/api/year', setYear_Data);
   },[])
 
   //http://127.0.0.1:5000/api/year_month_order_with_para
   const [value, setValue] = useState(null);
   useEffect(() => {
-    fetchDatafunc('http://127.0.0.1:5000/api/year/order_value', setValue);
+    fetchDatafunc('https://martinco.pythonanywhere.com/api/year/order_value', setValue);
 },[])
 
 
@@ -42,10 +42,10 @@ function Year() {
           setX_Month(event.target.value);
   }
 
-  //http://127.0.0.1:5000/api/year_month_order_vendor_with_para
+  //https://martinco.pythonanywhere.com/api/year_month_order_vendor_with_para
   const [vendor_value, setVendor_Value] = useState(null);
   useEffect(() => {
-    fetchDatafunc('http://127.0.0.1:5000/api/year_month_order_vendor_with_para', setVendor_Value);
+    fetchDatafunc('https://martinco.pythonanywhere.com/api/year_month_order_vendor_with_para', setVendor_Value);
   },[])
 
   const [vendor_year, setV_Year] = useState(null);
@@ -60,7 +60,7 @@ function Year() {
 
 
 
- //http://127.0.0.1:5000/api/year_items
+ //https://martinco.pythonanywhere.com/api/year_items
    const [item_year, setItem_Year] = useState(null);
    
    const handleItemYear = (event) => {
@@ -69,10 +69,10 @@ function Year() {
 
   const [item, setItem] = useState(null);
   useEffect(() => {
-    fetchDatafunc('http://127.0.0.1:5000/api/year_items', setItem);
+    fetchDatafunc('https://martinco.pythonanywhere.com/api/year_items', setItem);
   },[])
 
-  //http://127.0.0.1:5000/api/delivery_rate_over_time
+  //https://martinco.pythonanywhere.com/api/delivery_rate_over_time
   const [x_datadeliveryrate, setX_DataDeliveryRate] = useState();
     
   const [y_datadeliveryrate, setY_DataDeliveryRate] = useState();
