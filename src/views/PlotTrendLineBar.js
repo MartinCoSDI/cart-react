@@ -1,7 +1,7 @@
 import React from "react";
 import Plot from 'react-plotly.js';
 
-function TrendlineBar({xaxis,yaxis, ybar,xname, yname, name}){
+function TrendlineBar({xaxis,yaxis, ybar,xname, yname, name, width, height}){
     return (
         <Plot className='data-delivery'
         data={[
@@ -16,9 +16,13 @@ function TrendlineBar({xaxis,yaxis, ybar,xname, yname, name}){
           
           {type:'bar', x:xaxis , y: ybar, yaxis: 'y2', name:'Value'}
         ]}
-        layout={ {width: 500, height: 480, title: name,
+        layout={ {width: width, height: height, title: name,
           
-            
+        legend : {
+          orientation: 'h',
+          x: 0.2,
+          y: 1.3
+        },
         xaxis: {
             title: xname
          },yaxis: {
@@ -31,7 +35,9 @@ function TrendlineBar({xaxis,yaxis, ybar,xname, yname, name}){
                 tickfont: {color: 'rgb(148, 103, 189)'},
                 overlaying: 'y',
                 side: 'right'
-  }
+          },
+          paper_bgcolor:'rgba(0,0,0,0)',
+                plot_bgcolor:'rgba(0,0,0,0)'
 
         } }
       />

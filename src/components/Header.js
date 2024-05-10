@@ -62,6 +62,12 @@ function Header() {
               <p>This Year</p>
             </Link>
           ) : null}
+
+          {user ? (
+            <Link onClick={showNavbar} to="/this" className="nav-element">
+              <p>This</p>
+            </Link>
+          ) : null}
           
           {user ? (
             <Link onClick={showNavbar} to="/profile" className="nav-element">

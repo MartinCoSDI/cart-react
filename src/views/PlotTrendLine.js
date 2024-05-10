@@ -1,7 +1,7 @@
 import React from "react";
 import Plot from 'react-plotly.js';
 
-function Trendline({xaxis,yaxis,xname, yname, name}){
+function Trendline({xaxis,yaxis,xname, yname, name, width, height}){
     return (
         <Plot className='data-delivery'
         data={[
@@ -13,12 +13,15 @@ function Trendline({xaxis,yaxis,xname, yname, name}){
             marker: {color: 'red'},
           }
         ]}
-        layout={ {width: 500, height: 480, title: name,
+        layout={ {width: width, height: height, title: name,
+          responsive: true,
         xaxis: {
             title: xname
          },yaxis: {
             title: yname
-         }
+         },
+         paper_bgcolor:'rgba(0,0,0,0)',
+         plot_bgcolor:'rgba(0,0,0,0)' //making the transparent color
         } }
       />
     )

@@ -11,9 +11,13 @@ import Today from "./views/Today";
 import Month from "./views/ThisMonth";
 import Year from "./views/ThisYear";
 
+
 import Profile from "./views/Profile";
 import Header from "./components/Header";
 import Protected from "./components/Protected";
+
+import This from "./views/This";
+
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
@@ -89,6 +93,7 @@ function App() {
                   </Protected>
                 }
               />
+
               <Route
                 exact
                 path="/thisweek"
@@ -117,6 +122,19 @@ function App() {
                     <Header />
                     <Year />
                   </div>
+                }
+              />
+
+              <Route
+                exact
+                path="/this"
+                element={
+                  <Protected isSignedIn={isSignedIn}>
+                    <div>
+                      <Header />
+                      <This />
+                    </div>
+                  </Protected>
                 }
               />
               <Route
