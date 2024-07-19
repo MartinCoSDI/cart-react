@@ -1,0 +1,9 @@
+<div className="div-one">
+            <button onClick={handleOTP}>OTP sending</button>
+            <p>{OTP}</p>
+            <h1>{OTP}</h1>
+            <label>Year:</label><input value={ooo} onChange={handleooo}></input>
+            <button >Check</button>
+            <button >Check</button>
+
+        </div>

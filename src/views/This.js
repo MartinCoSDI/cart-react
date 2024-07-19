@@ -77,7 +77,8 @@ function This() {
         fetchDatafunc('https://martinco.pythonanywhere.com/api/date_ship', setShipping_Days);
     },[])
 
-     
+    
+    /*
     const [OTP, setOTP] = useState(0);
     const handleOTP = () => {
         const fetchData = async() => {
@@ -147,6 +148,7 @@ function This() {
             console.error('Error', error)
         }
     }
+        */
 
     if (vendors === null) {
         return <div>Loading...</div>
@@ -248,15 +250,7 @@ function This() {
             </div>     
         </div>
 
-        <div className="div-one">
-            <button onClick={handleOTP}>OTP sending</button>
-            <p>{OTP}</p>
-            <h1>{OTP}</h1>
-            <label>Year:</label><input value={ooo} onChange={handleooo}></input>
-            <button onClick={checkOTP}>Check</button>
-            <button onClick={handleEmail}>Check</button>
-
-        </div>
+        
     </section>
     
   )
