@@ -68,12 +68,30 @@ function Header() {
               <p>This</p>
             </Link>
           ) : null}
+          {user ? (
+            <Link onClick={showNavbar} to="/work_order" className="nav-element">
+              <p>Work Order</p>
+            </Link>
+          ) : null}
+
+          {user ? (
+            <Link onClick={showNavbar} to="/requisition" className="nav-element">
+              <p>Requisition</p>
+            </Link>
+          ) : null}
           
           {user ? (
             <Link onClick={showNavbar} to="/profile" className="nav-element">
               <p>Profile</p>
             </Link>
           ) : null}
+
+          {user ? (
+            <Link onClick={showNavbar} to="/ML" className="nav-element">
+              <p>ML</p>
+            </Link>
+          ) : null}
+
           <Link to={!user && "/login"} className="nav-element">
             <div onClick={handleAuthenticaton} className="signin_but">
               <p>{user ? "Sign Out" : "Sign In"}</p>

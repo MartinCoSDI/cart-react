@@ -3,6 +3,17 @@ import "./ThisWeek.css";
 
 function Week() {
 
+  const fetchDatafunc  = async(url, dataset) => {
+    try {
+        const response = await fetch(url);
+        const jsonData = await response.json();
+        dataset(jsonData);
+    }
+    catch(error){
+        console.error('Erro fetching data:' , error);
+    }
+};
+
   //https://martinco.pythonanywhere.com/api/today
   const [today_data, setToday_Data] = useState(null);
 
@@ -55,6 +66,16 @@ function Week() {
     return filteredData;
   }
 
+  const [requestor, setRequestor] = useState();
+
+    useEffect(() => {
+        fetchDatafunc('http://127.0.0.1:5000/api/mongoDB/requestor_total_orders', setRequestor);
+    },[])
+
+  if (requestor === null) {
+      return <div>Loading...</div>
+  }
+
 
   return (
     <section className='report'>
@@ -82,19 +103,40 @@ function Week() {
                   } 
                 </div>
               </div>
-              <div className="table">
+              <div className="area two">
+                <h3 className="card-title">Requestors of the week</h3>                
                 
-                  <table id='data-table'>
+                <table>
                     <thead>
-                      <tr>
-                          
-                      </tr>
+                        <tr>
+                            <th>Requestor</th>
+                            <th>Quantity</th>
+                        </tr>
                     </thead>
-                  </table>
+                    {requestor ? (
+                    <tbody>
+                      {Object.entries(requestor).map(([key,value]) => (
+                        <tr key={key}>
+                            <td>{key}</td>
+                            <td>{value}</td>
+                        </tr>
+                      ))}
+                       
+                    </tbody>
+                  ) : 
+                    (
+                      <p>Loading...</p>
+                    )
+                  } 
                     
-              </div>
+                </table>
+                
+                
+                
+            </div>  
             
         </section>
+        
     </section>
   )
 }

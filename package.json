@@ -1,6 +1,6 @@
 {
   "homepage": "https://MartinCoSDI.github.io/react-project",
-  "name": "auth",
+  "name": "mongosetup",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

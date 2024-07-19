@@ -5,6 +5,7 @@ import BarHorizontal from "./PlotBarHorizontal";
 import Trendline from './PlotTrendLine';
 import Bar from "./PlotBar";
 import Plot from 'react-plotly.js';
+import Gadget from "./gadget";
 
 function This() {
 
@@ -71,6 +72,82 @@ function This() {
         fetchDatafunc('https://martinco.pythonanywhere.com/api/top_5_vendor', setVendor);
     },[])
 
+    const [shipping_days, setShipping_Days] = useState(null);
+    useEffect(() => {
+        fetchDatafunc('http://127.0.0.1:5000/api/date_ship', setShipping_Days);
+    },[])
+
+     
+    const [OTP, setOTP] = useState(0);
+    const handleOTP = () => {
+        const fetchData = async() => {
+            try {
+                const response = await fetch('http://127.0.0.1:5000/api/pwd');
+                const jsonData = await response.json();
+                setOTP(jsonData.pwd);
+            }
+            catch(error){
+                console.error('Erro fetching data:' , error);
+            }
+        };
+    
+        fetchData();
+    }
+    const [ooo, setooo] = useState(null);
+    const handleooo = (event) => {
+        setooo(event.target.value);
+        console.log(ooo);
+        console.log(OTP);
+    }
+    const checkOTP = () => {
+        if (Number(ooo) === Number(OTP)) {
+            console.log("123456");
+
+        }
+        else{
+            const fetchData = async() => {
+                try {
+                    const response = await fetch('http://127.0.0.1:5000/api/pwd');
+                    const jsonData = await response.json();
+                    setOTP(jsonData.pwd);
+                }
+                catch(error){
+                    console.error('Erro fetching data:' , error);
+                }
+            };
+        
+            fetchData();
+            console.log(OTP);
+            setooo("");
+
+        }
+    }
+
+    const handleEmail = async() => {
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/send-mail',
+        {
+            method: 'POST',
+            headers : {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email:'martin.co@sdi.com',
+                message: 'Hello, testing'
+            })
+        });
+        if (response.ok){
+            console.log('done')
+        }
+        else{
+            console.error('failed')
+        }
+        }
+        catch (error) {
+            console.error('Error', error)
+        }
+    }
+
     if (vendors === null) {
         return <div>Loading...</div>
     }
@@ -79,7 +156,7 @@ function This() {
         return <div>Loading...</div>
     }
 
-    
+
 
   return (
     <section className="report">
@@ -120,31 +197,7 @@ function This() {
 
         <div className="div-one">
             <div className="area two gau">
-                <Plot className='data-delivery'
-            data={[
-                {
-                type: "indicator",
-                mode: "gauge+number+delta",
-                value: 120,
-                title: { text: "Speed", font: { size: 12 } },
-                delta: { reference: 200, increasing: { color: "RebeccaPurple" } },
-                gauge: {
-                    axis: { range: [null, 200], tickwidth: 2, tickcolor: "darkblue" },
-                    bar: { color: "darkblue" },
-                    bgcolor: "white",
-                    borderwidth: 2,
-                    bordercolor: "gray"
-                }
-                }
-            ]}
-            layout={ {
-                width: 350,
-                height: 400,
-                paper_bgcolor:'rgba(0,0,0,0)',
-                plot_bgcolor:'rgba(0,0,0,0)',
-                font: { color: "darkblue", family: "Arial" }
-            }}
-        />
+                <Gadget className='data-delivery' min ={shipping_days.start} middle_1 = {shipping_days.mid_1} middle_2 = {shipping_days.mid_2} max ={shipping_days.end}/>
                 
             </div>
 
@@ -193,6 +246,16 @@ function This() {
                 
                 
             </div>     
+        </div>
+
+        <div className="div-one">
+            <button onClick={handleOTP}>OTP sending</button>
+            <p>{OTP}</p>
+            <h1>{OTP}</h1>
+            <label>Year:</label><input value={ooo} onChange={handleooo}></input>
+            <button onClick={checkOTP}>Check</button>
+            <button onClick={handleEmail}>Check</button>
+
         </div>
     </section>
     

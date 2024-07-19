@@ -18,6 +18,11 @@ import Protected from "./components/Protected";
 
 import This from "./views/This";
 
+import Work_Order from "./views/Work_Order_This"
+
+import Requisition from "./views/Requisition";
+
+import ML from "./views/ML";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
@@ -137,6 +142,31 @@ function App() {
                   </Protected>
                 }
               />
+
+              <Route
+                exact
+                path="/work_order"
+                element={
+                  <Protected isSignedIn={isSignedIn}>
+                    <div>
+                      <Header />
+                      <Work_Order />
+                    </div>
+                  </Protected>
+                }
+              />
+
+              <Route
+                exact
+                path="/requisition"
+                element={
+                  <div>
+                    <Header />
+                    <Requisition />
+                  </div>
+                }
+              />
+
               <Route
                 exact
                 path="/profile"
@@ -149,6 +179,20 @@ function App() {
                   </Protected>
                 }
               />
+
+              <Route
+                exact
+                path="/ML"
+                element={
+                  <Protected isSignedIn={isSignedIn}>
+                    <div>
+                      <Header />
+                      <ML />
+                    </div>
+                  </Protected>
+                }
+              />
+
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/register" element={<Register />} />
             </Routes>
