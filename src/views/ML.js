@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "./ML.css";
 
 function ML() {
@@ -26,7 +25,7 @@ function ML() {
     const [request1, setRequest] = useState('');
     const [result, setResult] = useState(0);
 
-    
+
     const handleSubmit = async(event) => {
         event.preventDefault();
 
@@ -37,7 +36,7 @@ function ML() {
 
         //using fetch to pass data
         try {
-            const response = await fetch('http://127.0.0.1:5000/api/handle', {
+            const response = await fetch('https://martinco.pythonanywhere.com/api/handle', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(dat)
