@@ -74,7 +74,7 @@ function This() {
 
     const [shipping_days, setShipping_Days] = useState(null);
     useEffect(() => {
-        fetchDatafunc('http://127.0.0.1:5000/api/date_ship', setShipping_Days);
+        fetchDatafunc('https://martinco.pythonanywhere.com/api/date_ship', setShipping_Days);
     },[])
 
      
