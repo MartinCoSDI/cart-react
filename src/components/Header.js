@@ -69,12 +69,6 @@ function Header() {
             </Link>
           ) : null}
           {user ? (
-            <Link onClick={showNavbar} to="/work_order" className="nav-element">
-              <p>Work Order</p>
-            </Link>
-          ) : null}
-
-          {user ? (
             <Link onClick={showNavbar} to="/requisition" className="nav-element">
               <p>Requisition</p>
             </Link>
