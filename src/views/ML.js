@@ -36,7 +36,7 @@ function ML() {
 
         //using fetch to pass data
         try {
-            const response = await fetch('https://martinco.pythonanywhere.com/api/handle', {
+            const response = await fetch('https://sdiinc.pythonanywhere.com/api/handle', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(dat)

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./This.css";
 import TrendlineBar from './PlotTrendLineBar';
-import BarHorizontal from "./PlotBarHorizontal";
+//import BarHorizontal from "./PlotBarHorizontal";
 import Trendline from './PlotTrendLine';
-import Bar from "./PlotBar";
-import Plot from 'react-plotly.js';
+//import Bar from "./PlotBar";
+//import Plot from 'react-plotly.js';
 import Gadget from "./gadget";
 
 function This() {
@@ -78,77 +78,7 @@ function This() {
     },[])
 
     
-    /*
-    const [OTP, setOTP] = useState(0);
-    const handleOTP = () => {
-        const fetchData = async() => {
-            try {
-                const response = await fetch('http://127.0.0.1:5000/api/pwd');
-                const jsonData = await response.json();
-                setOTP(jsonData.pwd);
-            }
-            catch(error){
-                console.error('Erro fetching data:' , error);
-            }
-        };
     
-        fetchData();
-    }
-    const [ooo, setooo] = useState(null);
-    const handleooo = (event) => {
-        setooo(event.target.value);
-        console.log(ooo);
-        console.log(OTP);
-    }
-    const checkOTP = () => {
-        if (Number(ooo) === Number(OTP)) {
-            console.log("123456");
-
-        }
-        else{
-            const fetchData = async() => {
-                try {
-                    const response = await fetch('http://127.0.0.1:5000/api/pwd');
-                    const jsonData = await response.json();
-                    setOTP(jsonData.pwd);
-                }
-                catch(error){
-                    console.error('Erro fetching data:' , error);
-                }
-            };
-        
-            fetchData();
-            console.log(OTP);
-            setooo("");
-
-        }
-    }
-
-    const handleEmail = async() => {
-        try {
-            const response = await fetch('http://127.0.0.1:5000/api/send-mail',
-        {
-            method: 'POST',
-            headers : {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email:'martin.co@sdi.com',
-                message: 'Hello, testing'
-            })
-        });
-        if (response.ok){
-            console.log('done')
-        }
-        else{
-            console.error('failed')
-        }
-        }
-        catch (error) {
-            console.error('Error', error)
-        }
-    }
-        */
 
     if (vendors === null) {
         return <div>Loading...</div>
@@ -157,8 +87,10 @@ function This() {
     if (year_data === null) {
         return <div>Loading...</div>
     }
-
-
+    
+    if (shipping_days === null) {
+        return <div>Loading...</div>
+    }
 
   return (
     <section className="report">
