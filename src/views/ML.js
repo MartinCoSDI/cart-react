@@ -1,24 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./ML.css";
 
 function ML() {
 
-    const fetchDatafunc  = async(url, dataset) => {
-        try {
-            const response = await fetch(url);
-            const jsonData = await response.json();
-            dataset(jsonData);
-        }
-        catch(error){
-            console.error('Erro fetching data:' , error);
-        }
-    };
-
-    const [data, setData] = useState();
-    
-    useEffect(() => {
-          fetchDatafunc('http://127.0.0.1:5000/api/data_2025', setData);
-    },[])
+   
     
 
     //define data
@@ -35,6 +20,9 @@ function ML() {
         }
 
         //using fetch to pass data
+        //http://127.0.0.1:5000//api/handle
+
+        //https://sdiinc.pythonanywhere.com/api/handle
         try {
             const response = await fetch('https://sdiinc.pythonanywhere.com/api/handle', {
                 method: 'POST',
@@ -44,6 +32,7 @@ function ML() {
         );
 
         //getting result from the API after passing the data
+        setRequest('')
         const result = await response.json();
         if (result.status === 'success'){
             setResult(result.result);
@@ -58,6 +47,66 @@ function ML() {
             alert('Error submitting form');
         }
     }
+
+    const [satisfy, setSatisfy] = useState('')
+
+    function sati(event){
+        setSatisfy(event.target.value)
+    }
+
+    let div1 = document.getElementById("zero");
+    let div2 = document.getElementById("one");
+
+    if (satisfy === 'No'){
+        div1.classList.add("hidden");
+
+        div2.classList.remove("hidden");
+
+    }
+
+    const [new_code, setNew_Code] = useState('')
+
+    
+
+    
+
+    const handleAdjustment = async(event) => {
+        event.preventDefault();
+        //define the structure here
+        const new_priority_code = {
+            data1 : new_code
+        }
+
+        //using fetch to pass data
+        //http://127.0.0.1:5000//api/handle_adjustment
+
+        //https://sdiinc.pythonanywhere.com/api/handle_adjustment
+        try {
+            const response = await fetch('https://sdiinc.pythonanywhere.com/api/handle_adjustment', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(new_priority_code)
+            }        
+        );
+
+        //getting result from the API after passing the data
+        const result = await response.json();
+        if (result.status === 'success'){
+            alert('New code is' + result)
+        }
+        else{
+            alert ('Error');
+        }
+
+        }
+        catch (error) {
+            console.error('error', error);
+            alert('Error submitting form');
+        }
+        setNew_Code(0)
+
+    }
+
   return (
     <section className="report">
         <div className="div-one">
@@ -82,6 +131,21 @@ function ML() {
             </p> 
             </div>     
 
+            <div className="area two" id="zero">
+                    <p>Do you satisfy with the prediction?</p>
+                    <button value = 'Yes' onClick= {(e) => sati(e) }>Yes</button>
+                    <button value = 'No' onClick= {(e) => sati(e)}>No</button>
+
+            </div>  
+
+            <div className="area two hidden" id="one">
+            <form onSubmit={handleAdjustment}>
+                    <p>Your priority code:</p>
+                    <input type='text' value = {new_code} onChange={(e) => setNew_Code(e.target.value)}/>
+
+                    <button type='submit'>submit</button>
+                </form>
+            </div>  
         </div>
 
     </section>

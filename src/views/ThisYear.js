@@ -3,7 +3,7 @@ import "./ThisYear.css";
 import TrendlineBar from './PlotTrendLineBar';
 import BarHorizontal from "./PlotBarHorizontal";
 import Trendline from './PlotTrendLine';
-import Bar from "./PlotBar";
+import Bar from "./PlotBar_Double";
 
 function Year() {
 

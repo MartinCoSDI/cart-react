@@ -18,6 +18,7 @@ import Protected from "./components/Protected";
 
 import This from "./views/This";
 
+import Work_Order from "./views/Work_Order_This";
 
 import Requisition from "./views/Requisition";
 
@@ -137,6 +138,19 @@ function App() {
                     <div>
                       <Header />
                       <This />
+                    </div>
+                  </Protected>
+                }
+              />
+
+              <Route
+                exact
+                path="/workorder"
+                element={
+                  <Protected isSignedIn={isSignedIn}>
+                    <div>
+                      <Header />
+                      <Work_Order />
                     </div>
                   </Protected>
                 }
