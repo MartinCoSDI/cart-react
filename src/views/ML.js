@@ -1,15 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ML.css";
 
 function ML() {
 
-   
-    
-
     //define data
     const [request1, setRequest] = useState('');
-    const [result, setResult] = useState(0);
-
+    const [result, setResult] = useState();
 
     const handleSubmit = async(event) => {
         event.preventDefault();
@@ -32,7 +28,7 @@ function ML() {
         );
 
         //getting result from the API after passing the data
-        setRequest('')
+        //setRequest('')
         const result = await response.json();
         if (result.status === 'success'){
             setResult(result.result);
@@ -46,28 +42,53 @@ function ML() {
             console.error('error', error);
             alert('Error submitting form');
         }
+
     }
 
     const [satisfy, setSatisfy] = useState('')
+
+
 
     function sati(event){
         setSatisfy(event.target.value)
     }
 
+    
     let div1 = document.getElementById("zero");
     let div2 = document.getElementById("one");
 
-    if (satisfy === 'No'){
-        div1.classList.add("hidden");
+    useEffect(() => {
+        let div1 = document.getElementById("zero");
+        let div2 = document.getElementById("one");
+        if (satisfy === 'No'){
+            div1.classList.add("hidden");
+            div2.classList.remove("hidden");
+        }
+    
+        else{
+            setResult(0)
+            setRequest('')
+            div1.classList.add('hidden');
 
-        div2.classList.remove("hidden");
+       }
+       setSatisfy('')
+    }, [satisfy])
 
-    }
+    useEffect(() => {
+        let div1 = document.getElementById("zero");
+        let div2 = document.getElementById("one");
+        
+        if (result !== 0 && request1 !== ''){
+            div1.classList.remove("hidden");}
+       
+    }, [result])
 
-    const [new_code, setNew_Code] = useState('')
 
     
 
+    
+
+    const [new_code, setNew_Code] = useState('')
     
 
     const handleAdjustment = async(event) => {
@@ -104,6 +125,11 @@ function ML() {
             alert('Error submitting form');
         }
         setNew_Code(0)
+        setSatisfy('')
+        setResult(0)
+        div1.classList.add("hidden");
+        div2.classList.add("hidden");
+
 
     }
 
@@ -131,7 +157,7 @@ function ML() {
             </p> 
             </div>     
 
-            <div className="area two" id="zero">
+            <div className="area two hidden" id="zero">
                     <p>Do you satisfy with the prediction?</p>
                     <button value = 'Yes' onClick= {(e) => sati(e) }>Yes</button>
                     <button value = 'No' onClick= {(e) => sati(e)}>No</button>

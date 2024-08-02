@@ -155,7 +155,7 @@ function This() {
                 <p className="number">5,000</p>
                 
                 
-                <table>
+                <table className="vendor_table">
                     <thead>
                         <tr>
                             <th>Vendor</th>
