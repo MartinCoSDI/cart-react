@@ -20,6 +20,8 @@ import This from "./views/This";
 
 import Work_Order from "./views/Work_Order_This";
 
+import Energy from "./views/Energy";
+
 import Requisition from "./views/Requisition";
 
 import ML from "./views/ML";
@@ -151,6 +153,19 @@ function App() {
                     <div>
                       <Header />
                       <Work_Order />
+                    </div>
+                  </Protected>
+                }
+              />
+
+<Route
+                exact
+                path="/energy"
+                element={
+                  <Protected isSignedIn={isSignedIn}>
+                    <div>
+                      <Header />
+                      <Energy />
                     </div>
                   </Protected>
                 }
