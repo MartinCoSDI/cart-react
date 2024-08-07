@@ -5,6 +5,7 @@ import BarHorizontal from "./PlotBarHorizontal";
 import Trendline from './PlotTrendLine';
 import Bar_Single from "./PlotBar_Single";
 import Plot from 'react-plotly.js';
+import Pie from "./PieChart";
 
 function Work_Order() {
 
@@ -22,123 +23,63 @@ function Work_Order() {
     };
 
     useEffect(() => {
-        fetchDatafunc('http://127.0.0.1:5000/api/work_order/wo_total', setWork_Order_Data);
+        fetchDatafunc('https://martinco.pythonanywhere.com/api/work_order/wo_total', setWork_Order_Data);
     },[])
 
 
-    
+    //http://127.0.0.1:5000/api/work_order/wo_total_by_month
     const [order, setOrder] = useState();
         
     useEffect(() => {
-        fetchDatafunc('http://127.0.0.1:5000/api/work_order/wo_total_by_month', setOrder);
+        fetchDatafunc('https://martinco.pythonanywhere.com/api/work_order/wo_total_by_month', setOrder);
     },[])
 
+    //http://127.0.0.1:5000/api/work_order/wo_total_by_priority_code
     const [work_order, setWork_Order] = useState();
         
     useEffect(() => {
-        fetchDatafunc('http://127.0.0.1:5000/api/work_order/wo_total_by_priority_code', setWork_Order);
+        fetchDatafunc('https://martinco.pythonanywhere.com/api/work_order/wo_total_by_priority_code', setWork_Order);
     },[])
   
+    //http://127.0.0.1:5000/api/work_order/wo_total_by_requestor
+    const [work_order_by_requestor, setWork_Order_by_Requestor] = useState();
 
-   
-    //https://martinco.pythonanywhere.com/api/year_items
-    const [item_year, setItem_Year] = useState(2024);
-   
-    const handleItemYear = (event) => {
-        setItem_Year(event.target.value);
-    }
-
-    const [item, setItem] = useState(null);
     useEffect(() => {
-        fetchDatafunc('https://martinco.pythonanywhere.com/api/year_items', setItem);
+        fetchDatafunc('https://martinco.pythonanywhere.com/api/work_order/wo_total_by_requestor', setWork_Order_by_Requestor);
     },[])
 
-    //http://127.0.0.1:5000/api/top_5_vendor
-    const [vendors, setVendor] = useState(null);
+    //http://127.0.0.1:5000/api/work_order/wo_total_by_requestor
+    const [work_order_by_type_description, setWork_Order_by_Type_Description] = useState();
+
     useEffect(() => {
-        fetchDatafunc('https://martinco.pythonanywhere.com/api/top_5_vendor', setVendor);
+        fetchDatafunc('https://martinco.pythonanywhere.com/api/work_order/wo_total_by_wo_type_description', setWork_Order_by_Type_Description);
     },[])
 
-     
-    const [OTP, setOTP] = useState(0);
-    const handleOTP = () => {
-        const fetchData = async() => {
-            try {
-                const response = await fetch('http://127.0.0.1:5000/api/pwd');
-                const jsonData = await response.json();
-                setOTP(jsonData.pwd);
-            }
-            catch(error){
-                console.error('Erro fetching data:' , error);
-            }
-        };
-    
-        fetchData();
-    }
-    const [ooo, setooo] = useState(null);
-    const handleooo = (event) => {
-        setooo(event.target.value);
-        console.log(ooo);
-        console.log(OTP);
-    }
-    const checkOTP = () => {
-        if (Number(ooo) === Number(OTP)) {
-            console.log("123456");
+    //http://127.0.0.1:5000//api/work_order/wo_total_by_wo_total_by_building
+    const [work_order_by_building, setWork_Order_by_Building] = useState();
 
-        }
-        else{
-            const fetchData = async() => {
-                try {
-                    const response = await fetch('http://127.0.0.1:5000/api/pwd');
-                    const jsonData = await response.json();
-                    setOTP(jsonData.pwd);
-                }
-                catch(error){
-                    console.error('Erro fetching data:' , error);
-                }
-            };
-        
-            fetchData();
-            console.log(OTP);
-            setooo("");
+    useEffect(() => {
+        fetchDatafunc('https://martinco.pythonanywhere.com/api/work_order/wo_total_by_wo_total_by_building', setWork_Order_by_Building);
+    },[])
 
-        }
-    }
-
-    const handleEmail = async() => {
-        try {
-            const response = await fetch('http://127.0.0.1:5000/api/send-mail',
-        {
-            method: 'POST',
-            headers : {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email:'martin.co@sdi.com',
-                message: 'Hello, testing'
-            })
-        });
-        if (response.ok){
-            console.log('done')
-        }
-        else{
-            console.error('failed')
-        }
-        }
-        catch (error) {
-            console.error('Error', error)
-        }
-    }
-
-    if (vendors === null) {
-        return <div>Loading...</div>
-    }
 
     if (work_order_data === null) {
         return <div>Loading...</div>
     }
 
+    if (work_order === null) {
+        return <div>Loading...</div>
+    }
 
+    if (work_order_by_requestor === null) {
+        return <div>Loading...</div>
+    }
+    if (work_order_by_type_description === null) {
+        return <div>Loading...</div>
+    }
+    if (work_order_by_building === null) {
+        return <div>Loading...</div>
+    }
 
   return (
     <section className="report">
@@ -155,7 +96,7 @@ function Work_Order() {
             </div>
 
             <div className="area two">
-                <h3 className="card-title">Order Trend Monthly</h3>
+                <h3 className="card-title">This Year - Order Trend Monthly</h3>
                 <div className="trendline">
                         {order &&
                                 (
@@ -167,99 +108,67 @@ function Work_Order() {
             </div>  
 
             <div className="area two">
-                <h3 className="card-title">Delivery Rate</h3>
-                <p className="number">5,000</p>
+                <h3 className="card-title">This Year - Work Order by Code</h3>
                 <div className="trendline">
-                    <Bar_Single xaxis={work_order.code} yaxis={work_order.value} xname = 'Code' yname = 'Value' name = 'D' width = {330} height={300}></Bar_Single>
+                {work_order &&
+                                (
+                                    <Bar_Single xaxis={work_order.code} yaxis={work_order.value} xname = 'Code' yname = 'Value' name = '' width = {330} height={300}></Bar_Single>
+                                )
+                                
+                            }
                 </div>
             </div>     
         </div>
 
+
         <div className="div-one">
-            <div className="area two gau">
-                <Plot className='data-delivery'
-            data={[
-                {
-                type: "indicator",
-                mode: "gauge+number+delta",
-                value: 120,
-                title: { text: "Speed", font: { size: 12 } },
-                delta: { reference: 200, increasing: { color: "RebeccaPurple" } },
-                gauge: {
-                    axis: { range: [null, 200], tickwidth: 2, tickcolor: "darkblue" },
-                    bar: { color: "darkblue" },
-                    bgcolor: "white",
-                    borderwidth: 2,
-                    bordercolor: "gray"
-                }
-                }
-            ]}
-            layout={ {
-                width: 350,
-                height: 400,
-                paper_bgcolor:'rgba(0,0,0,0)',
-                plot_bgcolor:'rgba(0,0,0,0)',
-                font: { color: "darkblue", family: "Arial" }
-            }}
-        />
-                
-            </div>
-
             <div className="area two">
-                <h3 className="card-title">Value and Quantity Percentage Change Over Month</h3>
-                <div className="grid-img-test" id = 'test'>
-                {item && 
-                    (
-                        item[item_year] && 
-                        ((
-                          <TrendlineBar xaxis = {item[item_year].Month} yaxis = {item[item_year].Items} ybar ={item[item_year].Percent_Change}  xname ='Month' yname = 'Items' name = 'Orders over Month' width = {350} height={300}></TrendlineBar>
-
-                          ))
-                    )
-                }
+                    {work_order_by_requestor &&
+                                        (
+                                            <h3 className="card-title">{work_order_by_requestor.title}</h3>
+                                        )
+                                        
+                    }
+                <div className="trendline">
+                    {work_order_by_requestor &&
+                            (
+                                <Bar_Single xaxis={work_order_by_requestor.name} yaxis={work_order_by_requestor.value} xname = 'Code' yname = 'Value' name = '' width = {330} height={300}></Bar_Single>
+                            )     
+                    }
+                </div>
+            </div> 
+            <div className="area two">
+                    {work_order_by_type_description &&
+                                (
+                                    <h3 className="card-title">{work_order_by_type_description.title}</h3>
+                                )
+                                
+                    }
+                <p className="number">Notice the percentage is too low, so it will break the visualize of chart, to know more detail, you can hover to the chart.</p>
+                <div className="trendline">
+                    {work_order_by_type_description &&
+                                    (
+                                        <Pie value={work_order_by_type_description.value} label={work_order_by_type_description.name} width = {330} height={300}></Pie>
+                                    )
+                    }
+                </div>
+            </div>    
+            <div className="area two">
+                    {work_order_by_building &&
+                                (
+                                    <h3 className="card-title">{work_order_by_building.title}</h3>
+                                )
+                                
+                    }
+                <div className="trendline">
+                    {work_order_by_building &&
+                                (
+                                    <Bar_Single xaxis={work_order_by_building.name} yaxis={work_order_by_building.value} xname = 'Code' yname = 'Value' name = '' width = {330} height={300}></Bar_Single>
+                                )
+                                
+                    }
                 </div>
             </div>  
-
-            <div className="area two">
-                <h3 className="card-title">Top 5 vendors</h3>
-                <p className="number">5,000</p>
-                
-                
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Vendor</th>
-                            <th>Quantity</th>
-                            <th>Spend</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            vendors.map((vendor, index) => 
-                            (
-                                <tr key={index}>
-                                    <td>{vendor.name}</td>
-                                    <td>{vendor.quantity}</td>
-                                    <td>{vendor.value}</td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
-                
-                
-                
-            </div>     
-        </div>
-
-        <div className="div-one">
-            <button onClick={handleOTP}>OTP sending</button>
-            <p>{OTP}</p>
-            <h1>{OTP}</h1>
-            <label>Year:</label><input value={ooo} onChange={handleooo}></input>
-            <button onClick={checkOTP}>Check</button>
-            <button onClick={handleEmail}>Check</button>
-
         </div>
     </section>
     
