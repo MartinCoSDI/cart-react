@@ -20,7 +20,7 @@ function Week() {
   useEffect(() => {
     const fetchData = async() =>{
       try {
-        const response = await fetch('https://martinco.pythonanywhere.com/api/today');
+        const response = await fetch('https://martinco.pythonanywhere.com/api/week');
         const json = await response.json();
         setToday_Data(json);
       }

@@ -4,7 +4,7 @@
 // To connect with your mongoDB database
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://martincosdi:EqswFeO1v9ZTLvpe@cluster0.hldrpzr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
-	dbName: 'Temp_RequisitionDB',
+	dbName: 'RequisitionDB',
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 }, err => err ? console.log(err) : 
@@ -23,9 +23,20 @@ const UserSchema = new mongoose.Schema({
 	address: {
 		type: String,
 		default: 'LAX',
-	}
+	},
+	date: {
+		type: Date,
+		default: Date.now,
+	},
+	expected_date: {
+		type: Date,
+		default: null,
+	},
+    partList: {
+        type: Object
+    }
 });
-const User = mongoose.model('temp_requisition', UserSchema);
+const User = mongoose.model('requisition', UserSchema);
 User.createIndexes();
 
 // For backend and express

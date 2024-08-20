@@ -8,10 +8,14 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
+//require('dotenv').config();
 
+const api_Key = process.env.API_KEY;
 
 const firebaseConfig = {
   apiKey: "AIzaSyDhtU54r-n2kv_mECy9CXbYCtOV1nDZjs0",
+  //apiKey: api_Key,
+
   authDomain: "react-authentication-f132f.firebaseapp.com",
   projectId: "react-authentication-f132f",
   storageBucket: "react-authentication-f132f.appspot.com",

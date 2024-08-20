@@ -26,6 +26,9 @@ import Requisition from "./views/Requisition";
 
 import ML from "./views/ML";
 
+import OTP_Login from "./views/OTP_Authentication";
+
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
 import { auth } from "./config/Firebase";
@@ -33,36 +36,59 @@ import { auth } from "./config/Firebase";
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
-  const [{}, dispatch] = useStateValue();
+  const [condition, setCondition] = useState(null);
 
+  const [{user, cond_test}, dispatch] = useStateValue();
+ 
   useEffect(() => {
     // will only run once when the app component loads...
 
     auth.onAuthStateChanged((authUser) => {
       console.log("THE USER IS >>> ", authUser);
+      console.log("THE CONDITION IS >>> ",cond_test)
+
 
       if (authUser) {
         // the user just logged in / the user was logged in
 
         dispatch({
           type: "SET_USER",
-          user: authUser,
+          user: authUser
         });
         setIsSignedIn(true);
       } else {
         // the user is logged out
         dispatch({
           type: "SET_USER",
-          user: null,
+          user: null
         });
         setIsSignedIn(false);
+      }
+
+      if (cond_test) {
+        // the user just logged in / the user was logged in
+
+        dispatch({
+          type: "SET_COND",
+          cond_test: true
+        });
+        setCondition(true);
+      } else {
+        // the user is logged out
+        dispatch({
+          type: "SET_COND",
+          cond_test: null
+                });
+        setCondition(false);
       }
     });
   }, []);
 
   return (
     <div>
-      {isSignedIn !== null && (
+      {isSignedIn !== null &&
+      condition !== null &&
+      (
         <Router>
           <div className="app">
             <Routes>
@@ -80,7 +106,7 @@ function App() {
                 exact
                 path="/dashboard"
                 element={
-                  <Protected isSignedIn={isSignedIn}>
+                  <Protected isSignedIn={cond_test}>
                     <div>
                       <Header />
                       <Dashboard />
@@ -92,7 +118,7 @@ function App() {
                 exact
                 path="/today"
                 element={
-                  <Protected isSignedIn={isSignedIn}>
+                  <Protected isSignedIn={cond_test}>
                     <div>
                       <Header />
                       <Today />
@@ -105,30 +131,37 @@ function App() {
                 exact
                 path="/thisweek"
                 element={
-                  <div>
-                    <Header />
-                    <Week />
-                  </div>
+                  <Protected isSignedIn={cond_test}>
+                    <div>
+                      <Header />
+                      <Week />
+                    </div>
+                  </Protected>
                 }
               />
               <Route
                 exact
                 path="/thismonth"
                 element={
-                  <div>
-                    <Header />
-                    <Month />
-                  </div>
+                  <Protected isSignedIn={cond_test}>
+                    <div>
+                      <Header />
+                      <Month />
+                    </div>
+                  </Protected>
                 }
               />
               <Route
                 exact
                 path="/thisyear"
                 element={
-                  <div>
-                    <Header />
-                    <Year />
-                  </div>
+                  <Protected isSignedIn={cond_test}>
+                    <div>
+                      <Header />
+                      <Year />
+                    </div>
+                  </Protected>
+                  
                 }
               />
 
@@ -136,7 +169,7 @@ function App() {
                 exact
                 path="/this"
                 element={
-                  <Protected isSignedIn={isSignedIn}>
+                  <Protected isSignedIn={cond_test}>
                     <div>
                       <Header />
                       <This />
@@ -149,7 +182,7 @@ function App() {
                 exact
                 path="/workorder"
                 element={
-                  <Protected isSignedIn={isSignedIn}>
+                  <Protected isSignedIn={cond_test}>
                     <div>
                       <Header />
                       <Work_Order />
@@ -162,7 +195,7 @@ function App() {
                 exact
                 path="/energy"
                 element={
-                  <Protected isSignedIn={isSignedIn}>
+                  <Protected isSignedIn={cond_test}>
                     <div>
                       <Header />
                       <Energy />
@@ -199,7 +232,7 @@ function App() {
                 exact
                 path="/ML"
                 element={
-                  <Protected isSignedIn={isSignedIn}>
+                  <Protected isSignedIn={cond_test}>
                     <div>
                       <Header />
                       <ML />
@@ -208,6 +241,17 @@ function App() {
                 }
               />
 
+              <Route
+                exact
+                path="/OTP_Auth"
+                element={
+                  <Protected isSignedIn={isSignedIn}>
+                    <div>
+                      <OTP_Login />
+                    </div>
+                  </Protected>
+                }
+              />
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/register" element={<Register />} />
             </Routes>

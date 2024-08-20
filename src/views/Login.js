@@ -16,7 +16,8 @@ function Login() {
 
     signInWithEmailAndPassword(auth, inputs.email, inputs.password)
       .then(() => {
-        navigate("/dashboard");
+        navigate("/OTP_Auth");
+        //navigate("/OTP_Auth");
       })
       .catch((error) => alert(error.message));
   };
