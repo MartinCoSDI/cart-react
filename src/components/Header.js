@@ -108,29 +108,25 @@ function Header() {
           ): null}
 
           {user ? (
-            <Link onClick={showNavbar} to="/requisition" className="nav-element">
-              <p>Requisition</p>
-            </Link>
+            cond_test ? (
+              <Link onClick={showNavbar} to="/requisition" className="nav-element">
+                <p>Requisition</p>
+              </Link>
+            ) : null
           ) : null}
           
           {user ? (
-            <Link onClick={showNavbar} to="/profile" className="nav-element">
-              <p>Profile</p>
-            </Link>
-          ) : null}
-
-          {user ? (
             cond_test ? (
-              <Link onClick={showNavbar} to="/ML" className="nav-element">
-                <p>ML</p>
+              <Link onClick={showNavbar} to="/profile" className="nav-element">
+                <p>Profile</p>
               </Link>
             ) : null
           ) : null}
 
           {user ? (
             cond_test ? (
-              <Link onClick={showNavbar} to="/OTP" className="nav-element">
-                <p>OTP</p>
+              <Link onClick={showNavbar} to="/ML" className="nav-element">
+                <p>ML</p>
               </Link>
             ) : null
           ) : null}
