@@ -38,7 +38,7 @@ function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
   const [condition, setCondition] = useState(null);
 
-  const [{user, cond_test}, dispatch] = useStateValue();
+  const [{user, cond_test, user_email}, dispatch] = useStateValue();
  
   useEffect(() => {
     // will only run once when the app component loads...
@@ -46,6 +46,8 @@ function App() {
     auth.onAuthStateChanged((authUser) => {
       console.log("THE USER IS >>> ", authUser);
       console.log("THE CONDITION IS >>> ",cond_test)
+      console.log("THE EMAIL IS >>> ",user_email)
+      console.log("THE CONDITION IS >>> ",user)
 
 
       if (authUser) {

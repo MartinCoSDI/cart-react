@@ -12,6 +12,7 @@ function OTP_Login() {
   const [isSignedIn, setIsSignedIn] = useState(null);
   const [{user}, dispatch] = useStateValue();
   const [{cond_test}, dispatches] = useStateValue();
+  const [{user_email}, dispatche] = useStateValue();
 
   const [OTP, setOTP] = useState(null);
   const [run_effect, setRun_Effect] = useState(false);
@@ -19,7 +20,7 @@ function OTP_Login() {
   const navigate = useNavigate();
   
   
-  const [OTP_Code, setOTP_Code] = useState(0);
+  const [OTP_Code, setOTP_Code] = useState();
   //const [{}, dispatch] = useStateValue();
 
 
@@ -34,6 +35,8 @@ function OTP_Login() {
 
   const [temp, setTemp] = useState();
 
+
+  //click to set the OTP code
   const sendEmail = (e) => {
     e.preventDefault();
     const getOTP = () => {
@@ -49,9 +52,10 @@ function OTP_Login() {
       };
       fetchData();}
     getOTP()
-    form.current.code = String(OTP)
+    //form.current.code = String(OTP)
     };
 
+  //submit to verify the OTP code
     const signIn = (e) => {
       e.preventDefault();
   
@@ -66,11 +70,14 @@ function OTP_Login() {
           navigate("/dashboard");
           console.log(isSignedIn)
           console.log(cond_test)
+          console.log(user_email)
         }
       else{
         alert('Wrong OTP')
       }
     };
+
+    //useEffect to catch the change in OTP, if the set OTP code been clicked, then set the runeffect to true, ready for another useEffect
     useEffect(() => {
       
       if(OTP !== null)
@@ -80,6 +87,9 @@ function OTP_Login() {
       }
 
     },[OTP])
+
+
+    //once the run effect turn to true, execute the to send the email. In other words, once OTP being set, then send email (needed info: dest email, and OTP code)
     useEffect(() => {
       
       if (run_effect){
@@ -88,7 +98,8 @@ function OTP_Login() {
           {
             code: form.current.code,
             name: "Martin's Web App",
-            user_email: form.current.user_email.value
+            user_email: user_email
+            //user_email: form.current.user_email.value
           }, {
           publicKey: '6GIgnMCh6RS_DcV8A',
         })
@@ -125,7 +136,9 @@ function OTP_Login() {
             value={OTP_Code}
             onChange={handleOTP}
           />
-
+        <div className="button-area">
+          
+        </div>
           <button
             type="submit"
             onClick={signIn}
@@ -133,15 +146,14 @@ function OTP_Login() {
           >
             Sign In
           </button>
+          <button
+            type="submit"
+            onClick={sendEmail}
+            className="login__signInButton"
+          >
+            Send email
+          </button>
         </form>
-        
-        <form ref={form} onSubmit={sendEmail}>
-            <label>Email</label>
-            <input type="email" name="user_email" />
-            <input type="submit" value="Send"/>
-        </form>
-
-        
       </div>
     </div>
   );

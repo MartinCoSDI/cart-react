@@ -3,8 +3,11 @@ import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/Firebase";
+import { useStateValue } from "../StateProvider";
 
 function Login() {
+  const [{user_email}, dispatch] = useStateValue();
+
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     email: "",
@@ -16,10 +19,20 @@ function Login() {
 
     signInWithEmailAndPassword(auth, inputs.email, inputs.password)
       .then(() => {
-        navigate("/OTP_Auth");
         //navigate("/OTP_Auth");
+        
+
+        
+          navigate("/OTP_Auth");
+          console.log(user_email)
+
       })
       .catch((error) => alert(error.message));
+    
+    dispatch({
+        type: "SET_EMAIL",
+        user_email: inputs.email
+        });
   };
 
   const register = () => {

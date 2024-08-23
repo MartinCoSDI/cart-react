@@ -1,6 +1,7 @@
 export const initialState = {
   user: null,
-  cond_test: null
+  cond_test: null,
+  user_email: null
 };
 
 // Selector
@@ -16,6 +17,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         cond_test: action.user
+      };
+    case "SET_EMAIL":
+      return {
+        ...state,
+        user_email: action.user
       }
 
     default:
