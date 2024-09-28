@@ -128,7 +128,7 @@ function OTP_Login() {
             console.log('FAILED...', error.text);
           },
         );
-        setRun_Effect(false)
+        //setRun_Effect(false)
       }
 
     },[run_effect])
