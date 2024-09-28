@@ -67,7 +67,7 @@ function OTP_Login() {
           });
   
           navigate("/dashboard");
-          console.log(user_email)
+          //console.log(user_email)
 
           setRun_Effect(false)
         }
@@ -83,20 +83,11 @@ function OTP_Login() {
       {
         form.current.code = String(OTP) //assign form.current here to use for useEffect later
         setRun_Effect(true)
-        console.log(form.current.code) //remove this when in production mode
+        //console.log(form.current.code) //remove this when in production mode
         hide_button.classList.add('hidden') //once user enter Send_email, which will set the OTP code, it will remove the button away
       }
 
     },[OTP])
-
-    useEffect(() => {
-      
-      if (run_effect){
-        console.log(123456)
-        //setRun_Effect(false)
-      }
-
-    },[run_effect])
 
     //adding the hidden variable here, while user not click on Send Email yet
     useEffect(() => {
@@ -115,6 +106,32 @@ function OTP_Login() {
     
     //adding the send email function in here
     
+
+    useEffect(() => {
+      
+      if (run_effect){
+        emailjs
+        .send('service_zzwcpnm', 'template_9t2c8uu',
+          {
+            code: form.current.code,
+            name: "Martin's Web App",
+            user_email: user_email
+            //user_email: form.current.user_email.value
+          }, {
+          publicKey: '6GIgnMCh6RS_DcV8A',
+        })
+        .then(
+          () => {
+            console.log('SUCCESS!');
+          },
+          (error) => {
+            console.log('FAILED...', error.text);
+          },
+        );
+        setRun_Effect(false)
+      }
+
+    },[run_effect])
 
 
 
