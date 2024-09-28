@@ -84,6 +84,7 @@ section{
     
     display: flex;
     flex-direction: column;
+    width: 100vw;
 }
 
 .report-section:first-child{

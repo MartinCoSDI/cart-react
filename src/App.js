@@ -12,7 +12,6 @@ import Month from "./views/ThisMonth";
 import Year from "./views/ThisYear";
 
 
-import Profile from "./views/Profile";
 import Header from "./components/Header";
 import Protected from "./components/Protected";
 
@@ -28,6 +27,7 @@ import ML from "./views/ML";
 
 import OTP_Login from "./views/OTP_Authentication";
 
+import Three_D from "./views/3D";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
@@ -38,7 +38,7 @@ function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
   const [condition, setCondition] = useState(null);
 
-  const [{user, cond_test, user_email}, dispatch] = useStateValue();
+  const [{user, cond_test, user_email, user_color}, dispatch] = useStateValue();
  
   useEffect(() => {
     // will only run once when the app component loads...
@@ -48,6 +48,8 @@ function App() {
       console.log("THE CONDITION IS >>> ",cond_test)
       console.log("THE EMAIL IS >>> ",user_email)
       console.log("THE CONDITION IS >>> ",user)
+      console.log("THE user_color IS >>> ",user_color, typeof(user_color))
+
 
 
       if (authUser) {
@@ -83,8 +85,12 @@ function App() {
                 });
         setCondition(false);
       }
+      
+
+      
     });
   }, []);
+
 
   return (
     <div>
@@ -174,7 +180,7 @@ function App() {
                   <Protected isSignedIn={cond_test}>
                     <div>
                       <Header />
-                      <This />
+                      <This holding_color = {user_color}/>
                     </div>
                   </Protected>
                 }
@@ -219,12 +225,12 @@ function App() {
 
               <Route
                 exact
-                path="/profile"
+                path="/ML"
                 element={
-                  <Protected isSignedIn={isSignedIn}>
+                  <Protected isSignedIn={cond_test}>
                     <div>
                       <Header />
-                      <Profile />
+                      <ML />
                     </div>
                   </Protected>
                 }
@@ -232,12 +238,12 @@ function App() {
 
               <Route
                 exact
-                path="/ML"
+                path="/3D_Model"
                 element={
                   <Protected isSignedIn={cond_test}>
                     <div>
                       <Header />
-                      <ML />
+                      <Three_D />
                     </div>
                   </Protected>
                 }

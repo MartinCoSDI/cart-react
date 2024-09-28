@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Plot from 'react-plotly.js';
 
 function TrendlineBar({xaxis,yaxis, ybar,xname, yname, name, width, height}){
-    return (
+  
+  const [temp, setTemp] = useState();
+  const [control, setControl] = useState(false);
+  
+  const handleGraph1click = (e) => {
+
+    const category = e.points[0].x;
+    
+    setTemp(category);
+    setControl(true);} 
+
+  useEffect(() => {
+    if (control !== false){
+        console.log(temp, 'this is from component')
+        setControl(false)
+    }
+
+  }, [control])
+  
+  return (
         <Plot className='data-delivery'
         data={[
           {
@@ -40,6 +59,8 @@ function TrendlineBar({xaxis,yaxis, ybar,xname, yname, name, width, height}){
                 plot_bgcolor:'rgba(0,0,0,0)'
 
         } }
+
+        onClick={handleGraph1click}
       />
     )
 }

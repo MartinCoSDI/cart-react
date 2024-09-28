@@ -134,21 +134,19 @@ function ML() {
     }
 
   return (
-    <section className="report">
-        <div className="div-one">
-
-            <div className="area two">
-                <h3 className="card-title">Value and Quantity Trend Monthly</h3>
+    <section className="report-ml">
+            <div className="area-two">
+                <h3 className="card-title">Enter your request here</h3>
                 
                 <form onSubmit={handleSubmit}>
                     <p>Request:</p>
                     <input type='text' value = {request1} onChange={(e) => setRequest(e.target.value)}/>
 
-                    <button type='submit'>submit</button>
+                    <button type='submit'>Submit</button>
                 </form>
             </div>  
 
-            <div className="area two">
+            <div className="area-two">
             <p >
                 Result
                 {result !== null && 
@@ -157,14 +155,14 @@ function ML() {
             </p> 
             </div>     
 
-            <div className="area two hidden" id="zero">
+            <div className="area-two hidden" id="zero">
                     <p>Do you satisfy with the prediction?</p>
                     <button value = 'Yes' onClick= {(e) => sati(e) }>Yes</button>
                     <button value = 'No' onClick= {(e) => sati(e)}>No</button>
 
             </div>  
 
-            <div className="area two hidden" id="one">
+            <div className="area-two hidden" id="one">
             <form onSubmit={handleAdjustment}>
                     <p>Your priority code:</p>
                     <input type='text' value = {new_code} onChange={(e) => setNew_Code(e.target.value)}/>
@@ -172,7 +170,6 @@ function ML() {
                     <button type='submit'>submit</button>
                 </form>
             </div>  
-        </div>
 
     </section>
     

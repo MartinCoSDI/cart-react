@@ -191,7 +191,7 @@ function Dashboard() {
                     (
                                     order[x_year] && 
                                     (
-                                    <Trendline xaxis = {order[x_year].month} yaxis ={order[x_year].order} xname ='Month' yname = 'Orders' name = 'Orders over Month'></Trendline>
+                                    <Trendline xaxis = {order[x_year].month} yaxis ={order[x_year].order} xname ='Month' yname = 'Orders' name = 'Orders over Month' width = '100px'></Trendline>
                                     )
                     )
                 }

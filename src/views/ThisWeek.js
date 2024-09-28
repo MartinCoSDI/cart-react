@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "./ThisWeek.css";
+import "./Today.css";
+import RecursiveTable from "./RecursiveTable";
 
-function Week() {
-
+function Today() {
+  //https://martinco.pythonanywhere.com/api/today
+  const [today_data, setToday_Data] = useState(null);
   const fetchDatafunc  = async(url, dataset) => {
     try {
         const response = await fetch(url);
@@ -14,131 +16,75 @@ function Week() {
     }
 };
 
-  //https://martinco.pythonanywhere.com/api/today
-  const [today_data, setToday_Data] = useState(null);
-
   useEffect(() => {
-    const fetchData = async() =>{
-      try {
-        const response = await fetch('https://martinco.pythonanywhere.com/api/week');
-        const json = await response.json();
-        setToday_Data(json);
-      }
-      catch(error){
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-
-    //define fetchData - create the function
-    //then call it to use within the useEffect hook
+        fetchDatafunc('https://martinco.pythonanywhere.com/api/week', setToday_Data);
   },[])
 
   //https://martinco.pythonanywhere.com/api/today_list_order
-  const [list_data, setList_Data] = useState(null);
+  const [list_data, setList_Data] = useState();
 
   useEffect(() => {
-    const fetchData = async() =>{
-      try {
-        const response = await fetch('https://martinco.pythonanywhere.com/api/today_list_order');
-        const json = await response.json();
-        setList_Data(json);
-      }
-      catch(error){
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
+    fetchDatafunc('https://martinco.pythonanywhere.com/api/today_list_order', setList_Data);
+},[])
 
-    //define fetchData - create the function
-    //then call it to use within the useEffect hook
-  },[])
 
-  const filterdata = (keyword) => {
-    if (!list_data) return null;
+  //testing
+  const [data_type, setData_Type] = useState(null);
 
-    const filteredData ={};
-    for (const [key, value] of Object.entries(list_data)) {
-      if (key.includes(keyword)){
-        filterdata[key] = value;
-      }
+
+
+  const [show, setShow] = useState(null);
+
+  function handleDataChange(event){
+    setData_Type(event.target.value)
+    if (event.target.value === "Open"){
+      setShow( <div>
+        {list_data ? <RecursiveTable data = {list_data.data_dict_open} ></RecursiveTable>:<p>Loading...</p>}
+    </div>)  
     }
-    return filteredData;
+    else if (event.target.value === "Closed"){
+      setShow( <div>
+        {list_data ? <RecursiveTable data = {list_data.data_dict_closed} ></RecursiveTable>:<p>Loading...</p>}
+    </div>)  
+    }
+    else if (event.target.value === "Required"){
+      setShow( <div>
+        {list_data ? <RecursiveTable data = {list_data.data_dict_required} ></RecursiveTable>:<p>Loading...</p>}
+    </div>)  
+    }
+    else{
+      setShow("")
+    }
   }
 
-  const [requestor, setRequestor] = useState();
+  
+  
 
-    useEffect(() => {
-        fetchDatafunc('https://martinco.pythonanywhere.com/api/mongoDB/requestor_total_orders', setRequestor);
-    },[])
-
-  if (requestor === null) {
-      return <div>Loading...</div>
-  }
 
 
   return (
-    <section className='report'>
-        <section className="report-section">
-            <h1 className="title">
-                Report Name
-            </h1>
-            <div className="analysis-section">
-                <div className="stat-div">
-                  {today_data ? (
-                    <ul className ="stat-list">
-                      {Object.entries(today_data).map(([key,value]) => (
-                        
-                        <li key={key} className="stat-li">
-                            <p>{key}</p>
-                            <p>{value}</p>
-                        </li>
-                      ))}
-                       
-                    </ul>
-                  ) : 
-                  (
-                    <p>Loading...</p>
-                  )
-                  } 
-                </div>
+  <section className="report">
+        <h1 className="title">Today Purchase</h1>
+          <div className="area-one">
+          {today_data ? (
+                
+            Object.entries(today_data).map(([key,value]) => (
+              <div className="report-card" key={key}>
+                  <h3 className="card-title">{key}</h3>
+                  <p>{value}</p>
               </div>
-              <div className="area two">
-                <h3 className="card-title">Requestors of the week</h3>                
-                
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Requestor</th>
-                            <th>Quantity</th>
-                        </tr>
-                    </thead>
-                    {requestor ? (
-                    <tbody>
-                      {Object.entries(requestor).map(([key,value]) => (
-                        <tr key={key}>
-                            <td>{key}</td>
-                            <td>{value}</td>
-                        </tr>
-                      ))}
-                       
-                    </tbody>
-                  ) : 
-                    (
-                      <p>Loading...</p>
-                    )
-                  } 
-                    
-                </table>
-                
-                
-                
-            </div>  
-            
-        </section>
-        
-    </section>
+            ))) : 
+            (
+              <p>Loading...</p>
+            )
+    } 
+
+          </div>
+
+          <div className="area-one">
+          </div>
+  </section>
   )
 }
 
-export default Week;
+export default Today;

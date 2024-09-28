@@ -63,38 +63,42 @@ function Today() {
 
 
   return (
-  <section className="report">
-        <h1 className="title">Today Purchase</h1>
-          <div className="area-one">
-          {today_data ? (
-                
-            Object.entries(today_data).map(([key,value]) => (
-              <div className="report-card" key={key}>
-                  <h3 className="card-title">{key}</h3>
-                  <p>{value}</p>
+    <section className='report'>
+        <section className="report-section">
+            <h1 className="title">
+                Report Name
+            </h1>
+            <div className="analysis-section">
+                <div className="stat-div">
+                  {today_data ? (
+                    <ul className ="stat-list">
+                      {Object.entries(today_data).map(([key,value]) => (
+                        
+                        <li key={key} className="stat-li">
+                            <p>{key}</p>
+                            <p>{value}</p>
+                        </li>
+                      ))}
+                       
+                    </ul>
+                  ) : 
+                  (
+                    <p>Loading...</p>
+                  )
+                  } 
+                </div>
               </div>
-            ))) : 
-            (
-              <p>Loading...</p>
-            )
-    } 
-
-          </div>
-
-          <div className="area-one">
-              
-              <select value={data_type} onChange={handleDataChange} className="select">
-                      <option value="nothing">Select</option>
-                      <option value="Open">Open</option>
-                      <option value="Closed">Closed</option>
-                      <option value="Required">Required</option>
+              <select value={data_type} onChange={handleDataChange}>
+                <option value="nothing">Select</option>
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+                <option value="Required">Required</option>
               </select>
-            <div className="table-section">
               {show}
-
-            </div>
-          </div>
-  </section>
+              
+            
+        </section>
+    </section>
   )
 }
 

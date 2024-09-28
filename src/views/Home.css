@@ -1,12 +1,11 @@
 .home {
+    margin: 35px 0;
     height: 100vh;
     align-items: center;
     display: flex;
     flex-direction: column;
     background-image: url(https://th.bing.com/th/id/R.b8a892bc2448e49282acc1b17d9e8cc3?rik=Twtyn%2fx6emHzOQ&pid=ImgRaw&r=0);
     background-size: cover;
-    
-
 }
 
 .home__container {

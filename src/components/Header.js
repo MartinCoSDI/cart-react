@@ -3,14 +3,30 @@ import "./Header.css";
 import { useStateValue } from "../StateProvider";
 import { auth } from "../config/Firebase";
 import { Link } from "react-router-dom";
-
+import reducer_s from "../reducer";
+import Three_D_Temp from "../views/3D copy";
 function Header() {
   const navRef = useRef();
-  const [{ user, cond_test }, dispatch] = useStateValue();
+  //const [{ user, cond_test }, dispatch] = useStateValue();
+  const [{user, cond_test, user_email, user_color, user_point_text, test}, dispatch] = useStateValue();
 
   const showNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
-  };
+    if (user_color !== null || user_point_text != null || test != null){
+        
+      dispatch({
+        type: "SET_COLOR",
+        user: null
+        });
+      dispatch({
+        type: "SET_POINT_TEXT",
+        user: null
+        });
+      dispatch({
+        type: "SET_TEST",
+        user: null
+        });
+  };}
 
   const handleAuthenticaton = () => {
     if (user) {
@@ -19,19 +35,22 @@ function Header() {
     showNavbar();
   };
 
-  console.log(user)
-  console.log(cond_test)
+  //console.log(user)
+  //console.log(cond_test)
 
 
   return (
     <div className="navbar">
       <header>
         <Link to="/react-project">
+        <Link to="/react-project">
           <img
             className="header_logo"
             src="https://www.logolynx.com/images/logolynx/0f/0f7cb486472899b42555a4acbdf7dab4.jpeg"
             alt="header_logo"
           />
+        </Link>
+
         </Link>
 
         <nav ref={navRef}>
@@ -41,7 +60,7 @@ function Header() {
           {
             user ? (
               cond_test ?  (
-                <Link onClick={showNavbar} to="/dashboard" className="nav-element">
+                <Link onClick={showNavbar} to="/dashboard" className="nav-element hid">
                   <p>Dashboard</p>
                 </Link>
               ) : null
@@ -56,36 +75,12 @@ function Header() {
             ) : null
           ): null}
 
-          {
-          user ? (
-            cond_test ? (
-              <Link onClick={showNavbar} to="/thisweek" className="nav-element">
-                <p>This Week</p>
-              </Link>
-            ) : null
-          )
-          : null}
-
-          {user ? (
-            cond_test ? (
-              <Link onClick={showNavbar} to="/thismonth" className="nav-element">
-                <p>This Month</p>
-              </Link>
-            ) : null
-          ): null}
-
-          {user ? (
-            cond_test ? (
-              <Link onClick={showNavbar} to="/thisyear" className="nav-element">
-                <p>This Year</p>
-              </Link>
-            ) : null
-          ) : null}
+          
 
           {user ? (
             cond_test ? (
               <Link onClick={showNavbar} to="/this" className="nav-element">
-                <p>This</p>
+                <p>Purchase Order</p>
               </Link>
             ) : null
           ) : null}
@@ -109,16 +104,8 @@ function Header() {
 
           {user ? (
             cond_test ? (
-              <Link onClick={showNavbar} to="/requisition" className="nav-element">
+              <Link onClick={showNavbar} to="/requisition" className="nav-element hide">
                 <p>Requisition</p>
-              </Link>
-            ) : null
-          ) : null}
-          
-          {user ? (
-            cond_test ? (
-              <Link onClick={showNavbar} to="/profile" className="nav-element">
-                <p>Profile</p>
               </Link>
             ) : null
           ) : null}
@@ -128,6 +115,37 @@ function Header() {
               <Link onClick={showNavbar} to="/ML" className="nav-element">
                 <p>ML</p>
               </Link>
+            ) : null
+          ) : null}
+
+          {user ? (
+            cond_test ? (
+              <Link onClick={showNavbar} to="/3D_Model" className="nav-element hide">
+                <p>3D Model</p>
+              </Link>
+            ) : null
+          ) : null}
+
+          {user ? (
+            cond_test ? (
+              <div className="dropdown hid">
+                <button className="dropbtn">Other Report
+                </button>
+                <div className="dropdown-content">
+                  <Link onClick={showNavbar} to="/thisweek" className="nav-element hid">
+                    <p>This Week</p>
+                  </Link>
+
+                  <Link onClick={showNavbar} to="/thismonth" className="nav-element hid">
+                    <p>This Month</p>
+                  </Link>
+
+                  <Link onClick={showNavbar} to="/thisyear" className="nav-element hid">
+                    <p>This Year</p>
+                  </Link>
+
+                </div>
+              </div>
             ) : null
           ) : null}
 
@@ -150,7 +168,7 @@ function Header() {
           </button>
         </nav>
         <button className="nav-btn" onClick={showNavbar}>
-          
+          Menu
         </button>
       </header>
     </div>

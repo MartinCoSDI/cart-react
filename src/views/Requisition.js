@@ -67,19 +67,21 @@ function App() {
     }
 
   return (
-    <form className="App" autoComplete="off">
-                <p>Name</p>
-                <input type="text" placeholder="name"
-                value={name} onChange={(e) => setName(e.target.value)} />
-                <p>Vendor</p>
-                <input type="text" placeholder="vendor"
-                value={vendor} onChange={(e) => setVendor(e.target.value)} />
-                <p>Address</p>
-                <input type="text" placeholder="address"
-                value={address} onChange={(e) => setAddress(e.target.value)} />
-      <button type="submit"
-                onClick={handleOnSubmit}>submit</button>
-    </form>
+    <div className="report">
+      <form className="App" autoComplete="off">
+                  <p>Name</p>
+                  <input type="text" placeholder="name"
+                  value={name} onChange={(e) => setName(e.target.value)} />
+                  <p>Vendor</p>
+                  <input type="text" placeholder="vendor"
+                  value={vendor} onChange={(e) => setVendor(e.target.value)} />
+                  <p>Address</p>
+                  <input type="text" placeholder="address"
+                  value={address} onChange={(e) => setAddress(e.target.value)} />
+        <button type="submit"
+                  onClick={handleOnSubmit}>submit</button>
+      </form>
+    </div>
   );
 }
 

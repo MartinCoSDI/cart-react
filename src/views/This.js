@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./This.css";
+import "./This_tailwind.css"
 import TrendlineBar from './PlotTrendLineBar';
 //import BarHorizontal from "./PlotBarHorizontal";
 import Trendline from './PlotTrendLine';
 //import Bar from "./PlotBar";
 //import Plot from 'react-plotly.js';
 import Gadget from "./gadget";
+import Plot from 'react-plotly.js';
+import { useStateValue } from "../StateProvider";
 
 function This() {
+    const [{user, cond_test, user_email, user_color, test}, dispatch] = useStateValue();
 
   //https://martinco.pythonanywhere.com/api/today
     const [year_data, setYear_Data] = useState(null);
@@ -24,14 +28,21 @@ function This() {
 
     const [order, setOrder] = useState();
 
+
+    //http://127.0.0.1:5000/api/year
+    //https://martinco.pythonanywhere.com/api/year
+    //https://martinco.pythonanywhere.com/api/year_new
     useEffect(() => {
-        fetchDatafunc('https://martinco.pythonanywhere.com/api/year', setYear_Data);
+        fetchDatafunc('https://martinco.pythonanywhere.com/api/year_new', setYear_Data);
     },[])
         
+
+    //http://127.0.0.1:5000//api/order_trend_dashboard
     useEffect(() => {
         fetchDatafunc('https://martinco.pythonanywhere.com/api/order_trend_dashboard', setOrder);
     },[])
   
+    
 
     //http://127.0.0.1:5000/api/delivery_rate_over_time
     const [x_datadeliveryrate, setX_DataDeliveryRate] = useState();
@@ -77,7 +88,34 @@ function This() {
         fetchDatafunc('https://martinco.pythonanywhere.com/api/date_ship', setShipping_Days);
     },[])
 
+    const [temp, setTemp] = useState();
+    const [control, setControl] = useState(false);
+
+    const tempdata = {
+        A: {value1: 10, value2: 20, value3: 30},
+        B: {value1: 20, value2: 30, value3: 40},
+        C: {value1: 30, value2: 40, value3: 50},
+
+    }
+
+    const category = Object.keys(tempdata)
+
+    const handleGraph1click = (e) => {
+
+        const category = e.points[0].x;
+        
+        setTemp(category);
+        setControl(true);
+    }
     
+    useEffect(() => {
+        if (control !== false){
+            console.log(temp)
+            setControl(false)
+        }
+
+    }, [control])
+
     
 
     if (vendors === null) {
@@ -92,6 +130,7 @@ function This() {
         return <div>Loading...</div>
     }
 
+
   return (
     <section className="report">
         <div className="div-one">
@@ -101,12 +140,15 @@ function This() {
                     Object.entries(year_data).map(([key,value]) => (
                     <div className="report-card" key={key}>
                         <h3 className="card-title">{key}</h3>
-                        <p className="number">{value}</p>
+                        {test ? <p className="number">{value[String(test)]}</p>
+                            : <p className="number">{value['total']}</p>
+                        }
                     </div>
                 ))}
             </div>
 
             <div className="area two">
+            
                 <h3 className="card-title">Value and Quantity Trend Monthly</h3>
                 <div className="trendline">
                         {order && 
@@ -124,7 +166,7 @@ function This() {
                 <h3 className="card-title">Delivery Rate</h3>
                 <p className="number">5,000</p>
                 <div className="trendline">
-                    <Trendline xaxis = {x_datadeliveryrate} yaxis ={y_datadeliveryrate} xname ='Month' yname = 'Percentage' name = 'Delivery Rate over Month' width = {350} height={300}></Trendline>
+                    <Trendline xaxis = {x_datadeliveryrate} yaxis ={y_datadeliveryrate} xname ='Month' yname = 'Percentage' name = 'Delivery Rate over Month' width = {350} height={300} ></Trendline>
                 </div>
             </div>     
         </div>
@@ -181,6 +223,7 @@ function This() {
                 
             </div>     
         </div>
+
 
         
     </section>

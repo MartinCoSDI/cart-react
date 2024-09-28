@@ -1,11 +1,14 @@
 export const initialState = {
   user: null,
   cond_test: null,
-  user_email: null
+  user_email: null,
+  user_color: null,
+  user_point_text: null,
+  test: null
 };
 
 // Selector
-const reducer = (state, action) => {
+const reducer_s = (state, action) => {
   console.log(action);
   switch (action.type) {
     case "SET_USER":
@@ -22,14 +25,29 @@ const reducer = (state, action) => {
       return {
         ...state,
         user_email: action.user
-      }
+      };
+    case "SET_COLOR":
+        return {
+          ...state,
+          user_color: action.user
+        };
+    case "SET_POINT_TEXT":
+        return {
+          ...state,
+          user_point_text: action.user
+        };
+    case "SET_TEST":
+        return {
+          ...state,
+          test: action.user
+        }
 
     default:
       return state;
   }
 };
 
-export default reducer;
+export default reducer_s;
 
 
 //for OTP authentication, created new condition in reducer

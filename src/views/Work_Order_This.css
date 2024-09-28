@@ -67,3 +67,35 @@
     justify-content: center;
     align-items: center;
 }
+
+
+@media only screen and (max-width: 900px) and (min-width: 380px){
+    .report{
+        display: flex;
+        flex-direction: column;
+        padding:0;
+        gap: 10px;
+    }
+    .div-one{
+        width: 100%;
+        min-height: 50%;
+        margin: 0;
+        margin-right: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    
+
+    .area{
+        min-width: 90vw;
+        margin: 10px 10px;
+        padding: 10px;
+
+        border-radius: 20px;
+    
+    }
+    
+}

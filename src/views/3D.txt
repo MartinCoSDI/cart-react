@@ -1,0 +1,28 @@
+<section className="report">
+       <div className="model">
+            <Canvas>
+                <ambientLight intensity={0.5}>
+                </ambientLight>
+                <directionalLight position={[5, 5, 5]} intensity={1}></directionalLight>
+
+                <Model_3D></Model_3D>
+                <OrbitControls></OrbitControls>
+            </Canvas>
+       </div>
+
+</section>
+
+
+.report{
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.model{
+    width: 20vw;
+    height: 20vh;
+
+  }

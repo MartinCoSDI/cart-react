@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import emailjs from '@emailjs/browser'; //have to npm install @emailjs/browser
-import "./Login.css";
+import "./OTP_Authentication.css";
 import { Link, useNavigate } from "react-router-dom";
 //import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/Firebase";
@@ -10,9 +10,12 @@ import { useStateValue } from "../StateProvider";
 function OTP_Login() {
 
   const [isSignedIn, setIsSignedIn] = useState(null);
-  const [{user}, dispatch] = useStateValue();
-  const [{cond_test}, dispatches] = useStateValue();
-  const [{user_email}, dispatche] = useStateValue();
+  //const [{user}, dispatch] = useStateValue();
+  //const [{user_email}, dispatche] = useStateValue();
+  
+  //adding the useState to use value from Global variable - Reducer
+  const [{user, cond_test, user_email}, dispatch] = useStateValue();
+
 
   const [OTP, setOTP] = useState(null);
   const [run_effect, setRun_Effect] = useState(false);
@@ -32,9 +35,6 @@ function OTP_Login() {
     code: '60',
     user_email: ''
   });
-
-  const [temp, setTemp] = useState();
-
 
   //click to set the OTP code
   const sendEmail = (e) => {
@@ -63,14 +63,13 @@ function OTP_Login() {
         {
           dispatch({
           type: "SET_COND",
-          user: true,
-          cond_test: true
+          user: true
           });
   
           navigate("/dashboard");
-          console.log(isSignedIn)
-          console.log(cond_test)
           console.log(user_email)
+
+          setRun_Effect(false)
         }
       else{
         alert('Wrong OTP')
@@ -79,42 +78,45 @@ function OTP_Login() {
 
     //useEffect to catch the change in OTP, if the set OTP code been clicked, then set the runeffect to true, ready for another useEffect
     useEffect(() => {
-      
+      let hide_button = document.getElementById('hide_button')
       if(OTP !== null)
       {
-        form.current.code = String(OTP)
+        form.current.code = String(OTP) //assign form.current here to use for useEffect later
         setRun_Effect(true)
+        console.log(form.current.code) //remove this when in production mode
+        hide_button.classList.add('hidden') //once user enter Send_email, which will set the OTP code, it will remove the button away
       }
 
     },[OTP])
 
-
-    //once the run effect turn to true, execute the to send the email. In other words, once OTP being set, then send email (needed info: dest email, and OTP code)
     useEffect(() => {
       
       if (run_effect){
-        emailjs
-        .send('service_zzwcpnm', 'template_9t2c8uu',
-          {
-            code: form.current.code,
-            name: "Martin's Web App",
-            user_email: user_email
-            //user_email: form.current.user_email.value
-          }, {
-          publicKey: '6GIgnMCh6RS_DcV8A',
-        })
-        .then(
-          () => {
-            console.log('SUCCESS!');
-          },
-          (error) => {
-            console.log('FAILED...', error.text);
-          },
-        );
-        setRun_Effect(false)
+        console.log(123456)
+        //setRun_Effect(false)
       }
 
     },[run_effect])
+
+    //adding the hidden variable here, while user not click on Send Email yet
+    useEffect(() => {
+      let hide_button = document.getElementById('hide_button')
+      if(!run_effect)
+      {
+       //remove this when in production mode
+        hide_button.classList.remove('hidden')
+      }
+
+    },[run_effect])
+    //once the run effect turn to true, execute the to send the email. In other words, once OTP being set, then send email (needed info: dest email, and OTP code)
+      //User enter 'send email', will execute API to set the OTP code and hold it first
+      //Use useEffect when the OTP being updated to the new one, to send email
+    
+    
+    //adding the send email function in here
+    
+
+
 
   return (
     <div className="login">
@@ -150,6 +152,7 @@ function OTP_Login() {
             type="submit"
             onClick={sendEmail}
             className="login__signInButton"
+            id = "hide_button"
           >
             Send email
           </button>
