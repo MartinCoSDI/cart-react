@@ -34,21 +34,17 @@ import { useStateValue } from "./StateProvider";
 import { auth } from "./config/Firebase";
 
 
+
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
   const [condition, setCondition] = useState(null);
 
-  const [{user, cond_test, user_email, user_color}, dispatch] = useStateValue();
+  const [{user}, dispatch] = useStateValue();
  
   useEffect(() => {
     // will only run once when the app component loads...
 
     auth.onAuthStateChanged((authUser) => {
-      console.log("THE USER IS >>> ", authUser);
-      console.log("THE CONDITION IS >>> ",cond_test)
-      console.log("THE EMAIL IS >>> ",user_email)
-      console.log("THE CONDITION IS >>> ",user)
-      console.log("THE user_color IS >>> ",user_color, typeof(user_color))
 
 
 
@@ -67,29 +63,26 @@ function App() {
           user: null
         });
         setIsSignedIn(false);
-      }
 
+      }     
+
+      
+    }  
+  );
+  }, []);
+
+  useEffect(() => {
+    
+    const cond_test = sessionStorage.getItem('condition');
       if (cond_test) {
         // the user just logged in / the user was logged in
-
-        dispatch({
-          type: "SET_COND",
-          cond_test: true
-        });
         setCondition(true);
       } else {
         // the user is logged out
-        dispatch({
-          type: "SET_COND",
-          cond_test: null
-                });
         setCondition(false);
       }
-      
-
-      
-    });
-  }, []);
+  
+  }, [])
 
 
   return (
@@ -114,7 +107,7 @@ function App() {
                 exact
                 path="/dashboard"
                 element={
-                  <Protected isSignedIn={cond_test}>
+                  <Protected isSignedIn={condition}>
                     <div>
                       <Header />
                       <Dashboard />
@@ -126,7 +119,7 @@ function App() {
                 exact
                 path="/today"
                 element={
-                  <Protected isSignedIn={cond_test}>
+                  <Protected isSignedIn={condition}>
                     <div>
                       <Header />
                       <Today />
@@ -139,7 +132,7 @@ function App() {
                 exact
                 path="/thisweek"
                 element={
-                  <Protected isSignedIn={cond_test}>
+                  <Protected isSignedIn={condition}>
                     <div>
                       <Header />
                       <Week />
@@ -151,7 +144,7 @@ function App() {
                 exact
                 path="/thismonth"
                 element={
-                  <Protected isSignedIn={cond_test}>
+                  <Protected isSignedIn={condition}>
                     <div>
                       <Header />
                       <Month />
@@ -163,7 +156,7 @@ function App() {
                 exact
                 path="/thisyear"
                 element={
-                  <Protected isSignedIn={cond_test}>
+                  <Protected isSignedIn={condition}>
                     <div>
                       <Header />
                       <Year />
@@ -177,10 +170,10 @@ function App() {
                 exact
                 path="/this"
                 element={
-                  <Protected isSignedIn={cond_test}>
+                  <Protected isSignedIn={condition}>
                     <div>
                       <Header />
-                      <This holding_color = {user_color}/>
+                      <This/>
                     </div>
                   </Protected>
                 }
@@ -190,7 +183,7 @@ function App() {
                 exact
                 path="/workorder"
                 element={
-                  <Protected isSignedIn={cond_test}>
+                  <Protected isSignedIn={condition}>
                     <div>
                       <Header />
                       <Work_Order />
@@ -203,7 +196,7 @@ function App() {
                 exact
                 path="/energy"
                 element={
-                  <Protected isSignedIn={cond_test}>
+                  <Protected isSignedIn={condition}>
                     <div>
                       <Header />
                       <Energy />
@@ -227,7 +220,7 @@ function App() {
                 exact
                 path="/ML"
                 element={
-                  <Protected isSignedIn={cond_test}>
+                  <Protected isSignedIn={condition}>
                     <div>
                       <Header />
                       <ML />
@@ -240,7 +233,7 @@ function App() {
                 exact
                 path="/3D_Model"
                 element={
-                  <Protected isSignedIn={cond_test}>
+                  <Protected isSignedIn={condition}>
                     <div>
                       <Header />
                       <Three_D />
@@ -271,3 +264,8 @@ function App() {
 }
 
 export default App;
+
+
+//modified note:
+//Added sessionStorage and LocalStorage for condition and UserEmail
+//applied in OTP authentication, and login and header

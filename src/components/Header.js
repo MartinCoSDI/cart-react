@@ -1,14 +1,24 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Header.css";
 import { useStateValue } from "../StateProvider";
 import { auth } from "../config/Firebase";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import reducer_s from "../reducer";
 import Three_D_Temp from "../views/3D copy";
 function Header() {
+  const navigate = useNavigate();
+
   const navRef = useRef();
   //const [{ user, cond_test }, dispatch] = useStateValue();
   const [{user, cond_test, user_email, user_color, user_point_text, test}, dispatch] = useStateValue();
+
+  const [condition, setCondition] = useState(null);
+
+  useEffect(() => {
+    const savedCondition = sessionStorage.getItem('condition');
+    setCondition(savedCondition);
+  
+  })
 
   const showNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
@@ -30,7 +40,12 @@ function Header() {
 
   const handleAuthenticaton = () => {
     if (user) {
+      navigate("/react-project");
+
+      localStorage.removeItem('userEmail');
+      sessionStorage.removeItem('condition');
       auth.signOut();
+
     }
     showNavbar();
   };
@@ -68,7 +83,7 @@ function Header() {
 
           {user ? 
           (
-            cond_test ? (
+            condition ? (
               <Link onClick={showNavbar} to="/today" className="nav-element">
                 <p>Today</p>
               </Link>
@@ -78,7 +93,7 @@ function Header() {
           
 
           {user ? (
-            cond_test ? (
+            condition ? (
               <Link onClick={showNavbar} to="/this" className="nav-element">
                 <p>Purchase Order</p>
               </Link>
@@ -86,7 +101,7 @@ function Header() {
           ) : null}
 
           {user ? (
-            cond_test ? (
+            condition ? (
               <Link onClick={showNavbar} to="/workorder" className="nav-element">
                 <p>Workorder</p>
               </Link>
@@ -94,7 +109,7 @@ function Header() {
           ) : null}
 
           {user ? (
-            cond_test ?
+            condition ?
             (
               <Link onClick={showNavbar} to="/energy" className="nav-element">
                 <p>Energy</p>
@@ -103,7 +118,7 @@ function Header() {
           ): null}
 
           {user ? (
-            cond_test ? (
+            condition ? (
               <Link onClick={showNavbar} to="/requisition" className="nav-element hide">
                 <p>Requisition</p>
               </Link>
@@ -111,7 +126,7 @@ function Header() {
           ) : null}
 
           {user ? (
-            cond_test ? (
+            condition ? (
               <Link onClick={showNavbar} to="/ML" className="nav-element">
                 <p>ML</p>
               </Link>
@@ -119,7 +134,7 @@ function Header() {
           ) : null}
 
           {user ? (
-            cond_test ? (
+            condition ? (
               <Link onClick={showNavbar} to="/3D_Model" className="nav-element hide">
                 <p>3D Model</p>
               </Link>
@@ -127,7 +142,7 @@ function Header() {
           ) : null}
 
           {user ? (
-            cond_test ? (
+            condition ? (
               <div className="dropdown hid">
                 <button className="dropbtn">Other Report
                 </button>
@@ -150,7 +165,7 @@ function Header() {
           ) : null}
 
           {user ? (
-            !cond_test ? (
+            !condition ? (
               <Link onClick={showNavbar} to="/OTP_Auth" className="nav-element">
                 <p>OTP_Authentication</p>
               </Link>

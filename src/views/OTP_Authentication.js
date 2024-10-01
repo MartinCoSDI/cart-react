@@ -14,7 +14,6 @@ function OTP_Login() {
   //const [{user_email}, dispatche] = useStateValue();
   
   //adding the useState to use value from Global variable - Reducer
-  const [{user, cond_test, user_email}, dispatch] = useStateValue();
 
 
   const [OTP, setOTP] = useState(null);
@@ -25,6 +24,20 @@ function OTP_Login() {
   
   const [OTP_Code, setOTP_Code] = useState();
   //const [{}, dispatch] = useStateValue();
+
+
+  const [temp_email, setTemp_Email] = useState('');
+
+
+  //Used localStorage to save userEmail
+  //This useEffect function will capture the change to userEmail, and set useremail, later can use to send email to
+  useEffect(() => {
+
+    const savedEmail = localStorage.getItem('userEmail');
+    if (savedEmail){
+      setTemp_Email(savedEmail);
+    }
+  }, []);
 
 
     const handleOTP = (event) => {
@@ -59,17 +72,13 @@ function OTP_Login() {
     const signIn = (e) => {
       e.preventDefault();
   
-      if (OTP_Code === String(OTP))
-        {
-          dispatch({
-          type: "SET_COND",
-          user: true
-          });
+      if (OTP_Code === String(OTP)){
+        sessionStorage.setItem('condition', true)
   
-          navigate("/dashboard");
+        navigate("/today");
           //console.log(user_email)
 
-          setRun_Effect(false)
+        setRun_Effect(false)
         }
       else{
         alert('Wrong OTP')
@@ -83,7 +92,7 @@ function OTP_Login() {
       {
         form.current.code = String(OTP) //assign form.current here to use for useEffect later
         setRun_Effect(true)
-        //console.log(form.current.code) //remove this when in production mode
+        console.log(form.current.code) //remove this when in production mode
         hide_button.classList.add('hidden') //once user enter Send_email, which will set the OTP code, it will remove the button away
       }
 
@@ -108,32 +117,11 @@ function OTP_Login() {
     
 
     useEffect(() => {
-      
       if (run_effect){
-        emailjs
-        .send('service_zzwcpnm', 'template_9t2c8uu',
-          {
-            code: form.current.code,
-            name: "Martin's Web App",
-            user_email: user_email
-            //user_email: form.current.user_email.value
-          }, {
-          publicKey: '6GIgnMCh6RS_DcV8A',
-        })
-        .then(
-          () => {
-            console.log('SUCCESS!');
-          },
-          (error) => {
-            console.log('FAILED...', error.text);
-          },
-        );
-        //setRun_Effect(false)
+            //console.log(user_email)
+            console.log(temp_email)
       }
-
     },[run_effect])
-
-
 
   return (
     <div className="login">

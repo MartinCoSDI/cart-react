@@ -1,7 +1,5 @@
 export const initialState = {
   user: null,
-  cond_test: null,
-  user_email: null,
   user_color: null,
   user_point_text: null,
   test: null
@@ -15,16 +13,6 @@ const reducer_s = (state, action) => {
       return {
         ...state,
         user: action.user
-      };
-    case "SET_COND":
-      return {
-        ...state,
-        cond_test: action.user
-      };
-    case "SET_EMAIL":
-      return {
-        ...state,
-        user_email: action.user
       };
     case "SET_COLOR":
         return {

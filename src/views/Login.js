@@ -20,10 +20,8 @@ function Login() {
 
     signInWithEmailAndPassword(auth, inputs.email, inputs.password)
       .then(() => {
-        dispatch({
-          type: "SET_EMAIL",
-          user: inputs.email
-        })
+
+        localStorage.setItem('userEmail', inputs.email)
         navigate("/OTP_Auth");
         //navigate("/OTP_Auth");
       })
