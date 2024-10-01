@@ -118,9 +118,27 @@ function OTP_Login() {
 
     useEffect(() => {
       if (run_effect){
-            //console.log(user_email)
-            console.log(temp_email)
+        emailjs
+        .send('service_zzwcpnm', 'template_9t2c8uu',
+          {
+            code: form.current.code,
+            name: "Martin's Web App",
+            user_email: temp_email
+            //user_email: form.current.user_email.value
+          }, {
+          publicKey: '6GIgnMCh6RS_DcV8A',
+        })
+        .then(
+          () => {
+            console.log('SUCCESS!');
+          },
+          (error) => {
+            console.log('FAILED...', error.text);
+          },
+        );
+        setRun_Effect(false)
       }
+
     },[run_effect])
 
   return (
