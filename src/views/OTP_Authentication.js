@@ -92,7 +92,7 @@ function OTP_Login() {
       {
         form.current.code = String(OTP) //assign form.current here to use for useEffect later
         setRun_Effect(true)
-        console.log(form.current.code) //remove this when in production mode
+        //console.log(form.current.code) //remove this when in production mode
         hide_button.classList.add('hidden') //once user enter Send_email, which will set the OTP code, it will remove the button away
       }
 
