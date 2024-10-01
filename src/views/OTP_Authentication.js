@@ -10,7 +10,7 @@ import { useStateValue } from "../StateProvider";
 function OTP_Login() {
 
   const [isSignedIn, setIsSignedIn] = useState(null);
-  //const [{user}, dispatch] = useStateValue();
+  const [{user}, dispatch] = useStateValue();
   //const [{user_email}, dispatche] = useStateValue();
   
   //adding the useState to use value from Global variable - Reducer
@@ -74,6 +74,11 @@ function OTP_Login() {
   
       if (OTP_Code === String(OTP)){
         sessionStorage.setItem('condition', true)
+        
+        dispatch({
+          type: "SET_CONDITION_REDUCER",
+          user: true
+        });
   
         navigate("/today");
           //console.log(user_email)
@@ -114,9 +119,9 @@ function OTP_Login() {
     
     
     //adding the send email function in here
-    
 
     useEffect(() => {
+      
       if (run_effect){
         emailjs
         .send('service_zzwcpnm', 'template_9t2c8uu',
@@ -136,10 +141,12 @@ function OTP_Login() {
             console.log('FAILED...', error.text);
           },
         );
-        setRun_Effect(false)
+        //setRun_Effect(false)
       }
-
+    
     },[run_effect])
+    
+    
 
   return (
     <div className="login">

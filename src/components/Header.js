@@ -10,7 +10,7 @@ function Header() {
 
   const navRef = useRef();
   //const [{ user, cond_test }, dispatch] = useStateValue();
-  const [{user, cond_test, user_email, user_color, user_point_text, test}, dispatch] = useStateValue();
+  const [{user, condition_reducer, user_email, user_color, user_point_text, test}, dispatch] = useStateValue();
 
   const [condition, setCondition] = useState(null);
 
@@ -40,7 +40,11 @@ function Header() {
 
   const handleAuthenticaton = () => {
     if (user) {
-      navigate("/react-project");
+      //navigate("/react-project");
+      dispatch({
+        type: "SET_CONDITION_REDUCER",
+        user: null
+      });
 
       localStorage.removeItem('userEmail');
       sessionStorage.removeItem('condition');
@@ -52,7 +56,7 @@ function Header() {
 
   //console.log(user)
   //console.log(cond_test)
-
+  const [cond1,setCond1] = useState(false) //temporary to remove the dashboard while fixing the layout
 
   return (
     <div className="navbar">
@@ -74,7 +78,7 @@ function Header() {
           </Link>
           {
             user ? (
-              cond_test ?  (
+              cond1 ?  (
                 <Link onClick={showNavbar} to="/dashboard" className="nav-element hid">
                   <p>Dashboard</p>
                 </Link>

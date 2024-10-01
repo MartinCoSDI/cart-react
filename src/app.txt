@@ -1,0 +1,9 @@
+
+  useEffect(() => {
+    // will only run once when the app component loads...
+    if (condition_1){
+      
+      setCondition(true);
+      //console.log(user.condition_reducer)
+      }
+    }, [condition_1]);

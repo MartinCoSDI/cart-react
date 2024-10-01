@@ -32,6 +32,7 @@ import Three_D from "./views/3D";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
 import { auth } from "./config/Firebase";
+import { cond } from "three/webgpu";
 
 
 
@@ -39,56 +40,55 @@ function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
   const [condition, setCondition] = useState(null);
 
-  const [{user}, dispatch] = useStateValue();
- 
+  const [{user, condition_reducer}, dispatch] = useStateValue();
+
+  const [condition_1, setCondition_1] = useState(false);
+
+  useEffect(() => {
+    const savedCondition = sessionStorage.getItem('condition');
+    setCondition_1(savedCondition);
+    //console.log(savedCondition)
+  
+  })
+
   useEffect(() => {
     // will only run once when the app component loads...
-
-    auth.onAuthStateChanged((authUser) => {
-
-
-
-      if (authUser) {
-        // the user just logged in / the user was logged in
-
-        dispatch({
-          type: "SET_USER",
-          user: authUser
-        });
-        setIsSignedIn(true);
-      } else {
-        // the user is logged out
-        dispatch({
-          type: "SET_USER",
-          user: null
-        });
-        setIsSignedIn(false);
-
-      }     
-
+    if (condition_1){
       
-    }  
-  );
-  }, []);
-
-  useEffect(() => {
-    
-    const cond_test = sessionStorage.getItem('condition');
-      if (cond_test) {
-        // the user just logged in / the user was logged in
-        setCondition(true);
-      } else {
-        // the user is logged out
-        setCondition(false);
+      setCondition(true);
+      //console.log(user.condition_reducer)
       }
-  
-  }, [])
+    }, [condition_1]);
+ 
 
+    useEffect(() => {
+      // will only run once when the app component loads...
+  
+      auth.onAuthStateChanged((authUser) => {  
+        if (authUser) {
+          // the user just logged in / the user was logged in
+  
+          dispatch({
+            type: "SET_USER",
+            user: authUser
+          });
+          setIsSignedIn(true);
+        } else {
+          // the user is logged out
+          dispatch({
+            type: "SET_USER",
+            user: null
+          });
+          setIsSignedIn(false);
+        }
+      });
+    }, []);
+ 
 
   return (
     <div>
       {isSignedIn !== null &&
-      condition !== null &&
+      //condition_1 !== null &&
       (
         <Router>
           <div className="app">
@@ -107,7 +107,7 @@ function App() {
                 exact
                 path="/dashboard"
                 element={
-                  <Protected isSignedIn={condition}>
+                  <Protected isSignedIn={condition_1}>
                     <div>
                       <Header />
                       <Dashboard />
@@ -119,7 +119,7 @@ function App() {
                 exact
                 path="/today"
                 element={
-                  <Protected isSignedIn={condition}>
+                  <Protected isSignedIn={condition_1}>
                     <div>
                       <Header />
                       <Today />
@@ -132,7 +132,7 @@ function App() {
                 exact
                 path="/thisweek"
                 element={
-                  <Protected isSignedIn={condition}>
+                  <Protected isSignedIn={condition_1}>
                     <div>
                       <Header />
                       <Week />
@@ -144,7 +144,7 @@ function App() {
                 exact
                 path="/thismonth"
                 element={
-                  <Protected isSignedIn={condition}>
+                  <Protected isSignedIn={condition_1}>
                     <div>
                       <Header />
                       <Month />
@@ -156,7 +156,7 @@ function App() {
                 exact
                 path="/thisyear"
                 element={
-                  <Protected isSignedIn={condition}>
+                  <Protected isSignedIn={condition_1}>
                     <div>
                       <Header />
                       <Year />
@@ -170,7 +170,7 @@ function App() {
                 exact
                 path="/this"
                 element={
-                  <Protected isSignedIn={condition}>
+                  <Protected isSignedIn={condition_1}>
                     <div>
                       <Header />
                       <This/>
@@ -183,7 +183,7 @@ function App() {
                 exact
                 path="/workorder"
                 element={
-                  <Protected isSignedIn={condition}>
+                  <Protected isSignedIn={condition_1}>
                     <div>
                       <Header />
                       <Work_Order />
@@ -196,7 +196,7 @@ function App() {
                 exact
                 path="/energy"
                 element={
-                  <Protected isSignedIn={condition}>
+                  <Protected isSignedIn={condition_1}>
                     <div>
                       <Header />
                       <Energy />
@@ -220,7 +220,7 @@ function App() {
                 exact
                 path="/ML"
                 element={
-                  <Protected isSignedIn={condition}>
+                  <Protected isSignedIn={condition_1}>
                     <div>
                       <Header />
                       <ML />
@@ -233,7 +233,7 @@ function App() {
                 exact
                 path="/3D_Model"
                 element={
-                  <Protected isSignedIn={condition}>
+                  <Protected isSignedIn={condition_1}>
                     <div>
                       <Header />
                       <Three_D />
@@ -258,7 +258,7 @@ function App() {
             </Routes>
           </div>
         </Router>
-      )}
+      ) }
     </div>
   );
 }
@@ -269,3 +269,7 @@ export default App;
 //modified note:
 //Added sessionStorage and LocalStorage for condition and UserEmail
 //applied in OTP authentication, and login and header
+
+
+//bug: there was a bug that refresh the page will not keep the value,
+//fixed: added more useEffect in App.js

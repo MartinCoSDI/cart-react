@@ -1,5 +1,6 @@
 export const initialState = {
   user: null,
+  condition_reducer: null,
   user_color: null,
   user_point_text: null,
   test: null
@@ -18,6 +19,11 @@ const reducer_s = (state, action) => {
         return {
           ...state,
           user_color: action.user
+        };
+    case "SET_CONDITION_REDUCER":
+        return {
+          ...state,
+          condition_reducer: action.user
         };
     case "SET_POINT_TEXT":
         return {
