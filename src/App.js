@@ -34,7 +34,7 @@ import { useStateValue } from "./StateProvider";
 import { auth } from "./config/Firebase";
 import { cond } from "three/webgpu";
 
-
+import {useNavigate} from  "react-router-dom";
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
@@ -45,7 +45,7 @@ function App() {
   const [condition_1, setCondition_1] = useState(false);
 
   useEffect(() => {
-    const savedCondition = sessionStorage.getItem('condition');
+    const savedCondition = localStorage.getItem('condition');
     setCondition_1(savedCondition);
     //console.log(savedCondition)
   
@@ -83,6 +83,7 @@ function App() {
         }
       });
     }, []);
+
  
 
   return (

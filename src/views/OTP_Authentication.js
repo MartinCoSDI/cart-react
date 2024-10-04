@@ -73,7 +73,7 @@ function OTP_Login() {
       e.preventDefault();
   
       if (OTP_Code === String(OTP)){
-        sessionStorage.setItem('condition', true)
+        localStorage.setItem('condition', true)
         
         dispatch({
           type: "SET_CONDITION_REDUCER",

@@ -15,7 +15,7 @@ function Header() {
   const [condition, setCondition] = useState(null);
 
   useEffect(() => {
-    const savedCondition = sessionStorage.getItem('condition');
+    const savedCondition = localStorage.getItem('condition');
     setCondition(savedCondition);
   
   })
