@@ -97,7 +97,7 @@ function OTP_Login() {
       {
         form.current.code = String(OTP) //assign form.current here to use for useEffect later
         setRun_Effect(true)
-        console.log(form.current.code) //remove this when in production mode
+        //console.log(form.current.code) //remove this when in production mode
         hide_button.classList.add('hidden') //once user enter Send_email, which will set the OTP code, it will remove the button away
       }
 
@@ -120,6 +120,32 @@ function OTP_Login() {
     
     //adding the send email function in here
 
+    useEffect(() => {
+      
+      if (run_effect){
+        emailjs
+        .send('service_zzwcpnm', 'template_9t2c8uu',
+          {
+            code: form.current.code,
+            name: "Martin's Web App",
+            user_email: temp_email
+            //user_email: form.current.user_email.value
+          }, {
+          publicKey: '6GIgnMCh6RS_DcV8A',
+        })
+        .then(
+          () => {
+            console.log('SUCCESS!');
+          },
+          (error) => {
+            console.log('FAILED...', error.text);
+          },
+        );
+        //setRun_Effect(false)
+      }
+    
+    },[run_effect])
+    
     
 
   return (
