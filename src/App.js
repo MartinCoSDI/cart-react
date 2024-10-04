@@ -162,7 +162,6 @@ function App() {
                       <Year />
                     </div>
                   </Protected>
-                  
                 }
               />
 
@@ -272,4 +271,4 @@ export default App;
 
 
 //bug: there was a bug that refresh the page will not keep the value,
-//fixed: added more useEffect in App.js
+//fixed: added more useEffect in App.js, and added variable in reducer (using dispatch from the OTP authentication.js)
