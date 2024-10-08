@@ -74,7 +74,7 @@ function Header() {
         </Link>
 
         <nav ref={navRef}>
-          <Link onClick={showNavbar} to="/react-project" className="nav-element">
+          <Link onClick={showNavbar} to="/home" className="nav-element">
             <p>Home</p>
           </Link>
           {

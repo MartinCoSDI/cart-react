@@ -106,7 +106,7 @@ function App() {
             <Routes>
               <Route
                 exact
-                path="/react-project"
+                path="/home"
                 element={
                   <div>
                     <Header />

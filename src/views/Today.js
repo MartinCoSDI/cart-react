@@ -23,17 +23,17 @@ function Today() {
   useEffect(() => {
       fetchDatafunc('https://martinco.pythonanywhere.com/api/today', setToday_Data);
 
-  },[token])
+  },[])
 
   //https://martinco.pythonanywhere.com/api/today_list_order
   const [list_data, setList_Data] = useState();
 
   useEffect(() => {
-    if(token){
+   
       fetchDatafunc('https://martinco.pythonanywhere.com/api/today_list_order', setList_Data);
 
-    }
-},[token])
+    
+},[])
 
 
   //testing
