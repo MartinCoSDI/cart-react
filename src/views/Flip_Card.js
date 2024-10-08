@@ -5,10 +5,29 @@ import Trendline from "./PlotTrendLine";
 //function Trendline({xaxis,yaxis,xname, yname, name, width, height}){
 
 function Flip_Card({title, linkz}) {
+    const [token, setToken] = useState(null);
+
+    useEffect(() => {
+  
+      const savedToken = localStorage.getItem('firebase-token');
+      console.log(savedToken)
+      setToken(savedToken);
+      //console.log(savedCondition)
+    
+    })
+  
+
     const [value, setValue] = useState(null);
     const fetchDatafunc  = async(url, dataset) => {
         try {
-            const response = await fetch(url);
+            const response = await fetch(url,{
+                method: 'GET',
+                headers: {
+                  
+                  'Authorization': `Bearer ${token}`
+                }
+      
+              });
             const jsonData = await response.json();
             dataset(jsonData);
         }

@@ -1,3 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.report{
+    width: 100vw;
+    height: 100vh;
+}
+
+.model{
+    width: 100vw;
+    height: 100000px;
+    margin-top: 100px;
+  }

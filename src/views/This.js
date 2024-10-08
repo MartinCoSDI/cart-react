@@ -12,12 +12,28 @@ import { useStateValue } from "../StateProvider";
 
 function This() {
     const [{user, cond_test, user_email, user_color, test}, dispatch] = useStateValue();
+    const [token, setToken] = useState(null);
 
+    useEffect(() => {
+  
+      const savedToken = localStorage.getItem('firebase-token');
+      console.log(savedToken)
+      setToken(savedToken);
+      //console.log(savedCondition)
+    
+    })
   //https://martinco.pythonanywhere.com/api/today
     const [year_data, setYear_Data] = useState(null);
     const fetchDatafunc  = async(url, dataset) => {
         try {
-            const response = await fetch(url);
+            const response = await fetch(url,{
+                method: 'GET',
+                headers: {
+                  
+                  'Authorization': `Bearer ${token}`
+                }
+              }
+            );
             const jsonData = await response.json();
             dataset(jsonData);
         }
@@ -78,6 +94,7 @@ function This() {
     },[])
 
     //http://127.0.0.1:5000/api/top_5_vendor
+    //https://martinco.pythonanywhere.com/api/top_5_vendor
     const [vendors, setVendor] = useState(null);
     useEffect(() => {
         fetchDatafunc('https://martinco.pythonanywhere.com/api/top_5_vendor', setVendor);
@@ -129,6 +146,7 @@ function This() {
     if (shipping_days === null) {
         return <div>Loading...</div>
     }
+
 
 
   return (
@@ -206,16 +224,17 @@ function This() {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            vendors.map((vendor, index) => 
-                            (
-                                <tr key={index}>
-                                    <td>{vendor.name}</td>
-                                    <td>{vendor.quantity}</td>
-                                    <td>{vendor.value}</td>
-                                </tr>
-                            ))
-                        }
+
+                    {
+                    Object.entries(vendors).map(([key,value]) => (
+                        <tr key={key}>
+                            <td>{key}</td>
+                            <td>{value.quantity}</td>
+                            <td>{value.value}</td>
+                        </tr>
+                ))}
+                        
+                        
                     </tbody>
                 </table>
                 

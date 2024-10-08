@@ -3,11 +3,29 @@ import "./Today.css";
 import RecursiveTable from "./RecursiveTable";
 
 function Today() {
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+
+    const savedToken = localStorage.getItem('firebases-token');
+    console.log(savedToken)
+    setToken(savedToken);
+    //console.log(savedCondition)
+  
+  })
+
   //https://martinco.pythonanywhere.com/api/today
   const [today_data, setToday_Data] = useState(null);
-  const fetchDatafunc  = async(url, dataset) => {
+  const fetchDatafunc  = async(url, dataset, the_token) => {
     try {
-        const response = await fetch(url);
+        const response = await fetch(url,{
+          method: 'GET',
+          headers: {
+            
+            'Authorization': `Bearer ${the_token}`
+          }
+
+        });
         const jsonData = await response.json();
         dataset(jsonData);
     }
@@ -16,16 +34,22 @@ function Today() {
     }
 };
 
+  //http://127.0.0.1:5000//api/today
+  //https://martinco.pythonanywhere.com/api/today
   useEffect(() => {
-        fetchDatafunc('https://martinco.pythonanywhere.com/api/today', setToday_Data);
-  },[])
+      fetchDatafunc('http://127.0.0.1:5000//api/today', setToday_Data, token);
+
+  },[token])
 
   //https://martinco.pythonanywhere.com/api/today_list_order
   const [list_data, setList_Data] = useState();
 
   useEffect(() => {
-    fetchDatafunc('https://martinco.pythonanywhere.com/api/today_list_order', setList_Data);
-},[])
+    if(token){
+      fetchDatafunc('https://martinco.pythonanywhere.com/api/today_list_order', setList_Data, token);
+
+    }
+},[token])
 
 
   //testing

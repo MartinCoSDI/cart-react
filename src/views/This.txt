@@ -1,0 +1,8 @@
+{ vendors.map((vendor, index) => 
+                (
+                    <tr key={index}>
+                        <td>{vendor.name}</td>
+                        <td>{vendor.quantity}</td>
+                        <td>{vendor.value}</td>
+                    </tr>
+                ))}

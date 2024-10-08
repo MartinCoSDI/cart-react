@@ -47,6 +47,7 @@ function Header() {
       });
 
       localStorage.removeItem('userEmail');
+      localStorage.removeItem('firebase-token');
       sessionStorage.removeItem('condition');
       auth.signOut();
 
@@ -139,7 +140,7 @@ function Header() {
 
           {user ? (
             condition ? (
-              <Link onClick={showNavbar} to="/3D_Model" className="nav-element hide">
+              <Link onClick={showNavbar} to="/3D_Model" className="nav-element">
                 <p>3D Model</p>
               </Link>
             ) : null

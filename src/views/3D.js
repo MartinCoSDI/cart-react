@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import model_path from './Freecad_SDI.glb';
-
+import part_path from './Part.glb';
 //import { TextGeometry } from "three/examples/jsm/Addons.js";
 
 //import ModelPath from './views/Test_Freecad.gltf'
@@ -15,7 +15,7 @@ function Three_D() {
     
   function Model_3D(){
     //url ='http://127.0.0.1:5000/models/model'
-    const {scene, error} = useGLTF(model_path);
+    const {scene, error} = useGLTF(part_path);
 
     if (error){
       console.error('Error loading model: ', error);

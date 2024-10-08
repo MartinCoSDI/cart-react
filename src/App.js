@@ -61,18 +61,28 @@ function App() {
     }, [condition_1]);
  
 
+
+
     useEffect(() => {
       // will only run once when the app component loads...
   
-      auth.onAuthStateChanged((authUser) => {  
+      auth.onAuthStateChanged(async(authUser) => {  
         if (authUser) {
           // the user just logged in / the user was logged in
-  
+          
           dispatch({
             type: "SET_USER",
             user: authUser
           });
           setIsSignedIn(true);
+          try {
+            const token = await authUser.getIdToken();
+            console.log(token)
+            localStorage.setItem('firebases-token', token)  
+          }
+          catch(error){
+            console.log(error)
+          }
         } else {
           // the user is logged out
           dispatch({
