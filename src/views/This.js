@@ -12,27 +12,12 @@ import { useStateValue } from "../StateProvider";
 
 function This() {
     const [{user, cond_test, user_email, user_color, test}, dispatch] = useStateValue();
-    const [token, setToken] = useState(null);
-
-    useEffect(() => {
-  
-      const savedToken = localStorage.getItem('firebase-token');
-      console.log(savedToken)
-      setToken(savedToken);
-      //console.log(savedCondition)
     
-    })
   //https://martinco.pythonanywhere.com/api/today
     const [year_data, setYear_Data] = useState(null);
     const fetchDatafunc  = async(url, dataset) => {
         try {
-            const response = await fetch(url,{
-                method: 'GET',
-                headers: {
-                  
-                  'Authorization': `Bearer ${token}`
-                }
-              }
+            const response = await fetch(url
             );
             const jsonData = await response.json();
             dataset(jsonData);

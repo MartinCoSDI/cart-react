@@ -103,3 +103,25 @@ function Today() {
 }
 
 export default Today;
+
+
+{
+          method: 'GET',
+          headers: {
+            
+            'Authorization': `Bearer ${the_token}`
+          }
+
+        }
+
+
+        const [token, setToken] = useState(null);
+
+    useEffect(() => {
+  
+      const savedToken = localStorage.getItem('firebase-token');
+      console.log(savedToken)
+      setToken(savedToken);
+      //console.log(savedCondition)
+    
+    })

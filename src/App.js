@@ -78,7 +78,7 @@ function App() {
           try {
             const token = await authUser.getIdToken();
             console.log(token)
-            localStorage.setItem('firebases-token', token)  
+            //localStorage.setItem('firebases-token', token)  
           }
           catch(error){
             console.log(error)
